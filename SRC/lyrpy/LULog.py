@@ -1848,6 +1848,8 @@ def CreateLoggerFILEINI (AFileNameINI: str, ALogerName: str,
 
     # читаем конфигурацию из файла INI
     LFileNameINI = LUFile.ExpandFileName (AFileNameINI)
+    print ('LFileNameINI:',LFileNameINI)
+
     if LUFile.FileExists (LFileNameINI):
         # существует файл, который можно редактировать
         SetEditINI = True
@@ -1868,8 +1870,9 @@ def CreateLoggerFILEINI (AFileNameINI: str, ALogerName: str,
             SetEditINI = False
         #endif
     #endif
-    # print ('LPathINI:',LPathINI)
-    # print ('LFileNameINI:',LFileNameINI)
+
+    print ('LPathINI:',LPathINI)
+    print ('LFileNameINI:',LFileNameINI)
 
     if not SetEditINI:
         pass
@@ -1904,7 +1907,7 @@ def CreateLoggerFILEINI (AFileNameINI: str, ALogerName: str,
         if LUos.GOSInfo.system == 'Linux':
             raise 'Linux не поддерживается'
         #endif
-        # print(LOptionValue_01)
+        print('LOptionValue_01:',LOptionValue_01)
 
         LINIFile.SetOption ('handler_FILE_01', LOptionName, LOptionValue_01)
         LOptionValue_02 = "('" + os.path.join (LDirectoryLOG, LFileNameLOGjson) + "',)"
@@ -1915,12 +1918,13 @@ def CreateLoggerFILEINI (AFileNameINI: str, ALogerName: str,
         if LUos.GOSInfo.system == 'Linux':
             raise 'Linux не поддерживается'
         #endif
-        # print(LOptionValue_02)
+        print('LOptionValue_02:',LOptionValue_02)
 
         LINIFile.SetOption ('handler_FILE_02', LOptionName, LOptionValue_02)
         LINIFile.UpdateFileINI ()
     #endif
 
+    print('ADirectoryLOG:',ADirectoryLOG)
     if ADirectoryLOG == '':
         # log будет создан в текущем каталоге (по умолчанию)
         LDirectoryLOG = LUos.GetCurrentDir ()
@@ -1928,13 +1932,15 @@ def CreateLoggerFILEINI (AFileNameINI: str, ALogerName: str,
         # log будет создан в ADirectoryLOG
         LDirectoryLOG = LUFile.ExpandFileName (ADirectoryLOG)
     #endif
-    # print('LDirectoryLOG:',LDirectoryLOG)
+    print('LDirectoryLOG:',LDirectoryLOG)
+
     if not LUFile.DirectoryExists (LDirectoryLOG):
         lyrpy.LUFile.ForceDirectories(LDirectoryLOG)
     #endif
 
     # print(LFileNameINI)
-    logging.config.fileConfig (LFileNameINI, disable_existing_loggers=True, encoding=LUFile.cDefaultEncoding)
+    logging.config.fileConfig (LFileNameINI, disable_existing_loggers=True,
+                               encoding=LUFile.cDefaultEncoding)
     # logging.config.fileConfig (LFileNameINI, disable_existing_loggers=True, encoding='cp1251')
 
     # создаем регистратор
@@ -2020,13 +2026,16 @@ def STARTLogging (T: TTypeSETUPLOG, ADirectoryLOG: str, AFileNameLOG: str, AFile
 
     match T:
         case TTypeSETUPLOG.tslCONFIG:
-            GLoggerCONFIG = CreateLoggerCONFIG (CDefaultFileLogCONFIG, 'root', ADirectoryLOG, AFileNameLOG,
+            GLoggerCONFIG = CreateLoggerCONFIG (CDefaultFileLogCONFIG, 'root',
+                                                ADirectoryLOG, AFileNameLOG,
                                                 AFileNameLOGjson)
         case TTypeSETUPLOG.tslYAML:
-            GLoggerYAML = CreateLoggerYAML (CDefaultFileLogYAML, 'root', ADirectoryLOG, AFileNameLOG,
-                                                AFileNameLOGjson)
+            GLoggerYAML = CreateLoggerYAML (CDefaultFileLogYAML, 'root',
+                                            ADirectoryLOG, AFileNameLOG,
+                                            AFileNameLOGjson)
         case TTypeSETUPLOG.tslINI:
-            GLoggerFILEINI = CreateLoggerFILEINI (CDefaultFileLogINI, 'root', ADirectoryLOG, AFileNameLOG,
+            GLoggerFILEINI = CreateLoggerFILEINI (CDefaultFileLogINI, 'root',
+                                                  ADirectoryLOG, AFileNameLOG,
                                                   AFileNameLOGjson)
         case _:
             ...
