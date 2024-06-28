@@ -497,7 +497,7 @@ class TFileMemoLog (object):
                 _s = s
             else:
                 _s = self._LogDateStr (False) + ' ' + str(T.value) + ' ' + s
-            if not LUSupport.ISTerminal ():
+            if not LUSupport.IsTerminal ():
                 LCOLOR = COLORS_tls.get (T)
                 if LCOLOR is not None:
                     LFmt = LUConsole.sBEGIN_oct + LCOLOR + _s + LUConsole.sRESET
@@ -1411,7 +1411,7 @@ def LogFileName(ALog: int, ALogDir: str, ALogFile: str) -> str:
                 s = LUDateTime.DateTimeStr (False, LToday, LUDateTime.cFormatDateYYMMDD_01, False)
                 LLogFile = s+'.log'
             #endif
-            LLogFileName = s.path.join([LLogDir, LLogFile])
+            LLogFileName = os.path.join(LLogDir, LLogFile)
             if ALog == 10 or ALog == 30:
                 if LUFile.FileExists(LLogFileName):
                     try:
@@ -1439,7 +1439,7 @@ def LogAdd (ALog: int, ALogFile: str, AOpt: TTypeLogString, AMessage: str):
 
     def _WriteConsole(_s, T):
     #beginfunction
-        if not LUSupport.ISTerminal ():
+        if not LUSupport.IsTerminal ():
             LCOLOR = COLORS_tls.get (T)
             if LCOLOR is not None:
                 LFmt = LUConsole.sBEGIN_oct + LCOLOR + _s + LUConsole.sRESET

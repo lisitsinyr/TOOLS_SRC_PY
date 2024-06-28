@@ -340,7 +340,7 @@ def CreateTArgParser (AProg: str, ADescrption: str) -> TArgParser:
     LResult = TArgParser (prog = AProg, description=ADescrption, prefix_chars='-/',
                           usage = None, epilog = None, parents = [], formatter_class = argparse.HelpFormatter,
                           fromfile_prefix_chars = None, argument_default = None,
-                          conflict_handler = 'error', add_help = True, allow_abbrev = True, exit_on_error = True)
+                          conflict_handler = 'error', add_help = True)
     return LResult
 #endfunction
 
