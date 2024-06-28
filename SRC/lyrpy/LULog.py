@@ -2024,7 +2024,14 @@ def STARTLogging (T: TTypeSETUPLOG, ADirectoryLOG: str, AFileNameLOG: str, AFile
 
     AddLevelName ()
 
-    match T:
+    if LUos.GOSInfo.system == 'Windows':
+        LT = T
+    #endif
+    if LUos.GOSInfo.system == 'Linux':
+        LT = TTypeSETUPLOG.tslCONFIG
+    #endif
+
+    match LT:
         case TTypeSETUPLOG.tslCONFIG:
             GLoggerCONFIG = CreateLoggerCONFIG (CDefaultFileLogCONFIG, 'root',
                                                 ADirectoryLOG, AFileNameLOG,
