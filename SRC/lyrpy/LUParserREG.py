@@ -17,8 +17,12 @@ __annotations__ = """
 #------------------------------------------
 # БИБЛИОТЕКИ python
 #------------------------------------------
-import winreg
 import enum
+import platform
+
+if platform.system() == 'Windows':
+    import winreg
+#endif
 
 #------------------------------------------
 # БИБЛИОТЕКИ сторонние
