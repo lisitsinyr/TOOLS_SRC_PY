@@ -1688,7 +1688,7 @@ def CreateLoggerCONFIG (AFileNameCONFIG: str, ALogerName: str,
             #endwith
         except FileNotFoundError as ERROR:
             print ('Невозможно открыть файл', ERROR)
-            GLULogger.error('Невозможно открыть файл')
+            LoggerTOOLS.error('Невозможно открыть файл')
         #endtry
     else:
         CONFIG = copy.deepcopy (LOGGING_CONFIG)
@@ -1771,7 +1771,7 @@ def CreateLoggerYAML (AFileNameYAML: str, ALogerName: str, ADirectoryLOG: str, A
             #endwith
         except FileNotFoundError as ERROR:
             print ('Невозможно открыть файл', ERROR)
-            GLULogger.error ('Невозможно открыть файл')
+            LoggerTOOLS.error ('Невозможно открыть файл')
         #endtry
     else:
         CONFIG_YAML = copy.deepcopy (LOGGING_CONFIG)
@@ -1935,7 +1935,7 @@ def CreateLoggerFILEINI (AFileNameINI: str, ALogerName: str,
     print('LDirectoryLOG:',LDirectoryLOG)
 
     if not LUFile.DirectoryExists (LDirectoryLOG):
-        lyrpy.LUFile.ForceDirectories(LDirectoryLOG)
+        LUFile.ForceDirectories(LDirectoryLOG)
     #endif
 
     # print(LFileNameINI)
