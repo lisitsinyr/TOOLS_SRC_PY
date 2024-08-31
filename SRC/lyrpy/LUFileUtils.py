@@ -79,7 +79,6 @@ def __ListFile (APathSource, AMask, APathDest,
 #beginfunction
     LFileCount = 0
     with os.scandir(APathSource) as LFiles:
-    # with os.scandir(LUFile.GetPureWindowsPath (APathSource)) as LFiles:
         for LFile in LFiles:
             if (not LFile.is_symlink ()):
                 if LFile.is_file() and LUFile.CheckFileNameMask (LFile.name, AMask):
