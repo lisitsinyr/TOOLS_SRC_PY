@@ -1678,6 +1678,8 @@ def CreateLoggerCONFIG (AFileNameCONFIG: str, ALogerName: str,
     global CONFIG
     CONFIG = {}
 
+    print ('CONFIG:',ADirectoryLOG)
+
     LPath = LUFile.ExtractFileDir(__file__)
     LFileNameCONFIG = os.path.join (LPath, AFileNameCONFIG)
     if LUFile.FileExists(LFileNameCONFIG):
@@ -1770,8 +1772,8 @@ def CreateLoggerYAML (AFileNameYAML: str, ALogerName: str, ADirectoryLOG: str, A
                 CONFIG_YAML = yaml.load(FileCONFIG_YAML, Loader=yaml.FullLoader)
             #endwith
         except FileNotFoundError as ERROR:
-            print ('Невозможно открыть файл', ERROR)
-            LoggerTOOLS.error ('Невозможно открыть файл')
+            # print ('Невозможно открыть файл', ERROR)
+            LoggerTOOLS.error ('ERROR: Невозможно открыть файл')
         #endtry
     else:
         CONFIG_YAML = copy.deepcopy (LOGGING_CONFIG)
@@ -1787,7 +1789,7 @@ def CreateLoggerYAML (AFileNameYAML: str, ALogerName: str, ADirectoryLOG: str, A
     else:
         LFileNameLOG = LUFile.ExtractFileName (AFileNameLOG)
     #endif
-    print ('LFileNameLOG:', LFileNameLOG)
+    # print ('LFileNameLOG:', LFileNameLOG)
 
     if AFileNameLOGjson == '':
         LOptionValue_02 = CONFIG_YAML ['handlers'] ['FILE_02'] ['filename']
@@ -1812,11 +1814,10 @@ def CreateLoggerYAML (AFileNameYAML: str, ALogerName: str, ADirectoryLOG: str, A
 
     # установить имена log файлов в CONFIG
     LOptionValue_01 = os.path.join (LDirectoryLOG, LFileNameLOG)
-    print('LOptionValue_01:', LOptionValue_01)
+    # print('LOptionValue_01:', LOptionValue_01)
     CONFIG_YAML ['handlers'] ['FILE_01'] ['filename'] = LOptionValue_01
-
     LOptionValue_02 = os.path.join (LDirectoryLOG, LFileNameLOGjson)
-    print('LOptionValue_02:', LOptionValue_02)
+    # print('LOptionValue_02:', LOptionValue_02)
     CONFIG_YAML ['handlers'] ['FILE_02'] ['filename'] = LOptionValue_02
 
     if len (CONFIG_YAML) > 0:
@@ -1848,7 +1849,7 @@ def CreateLoggerFILEINI (AFileNameINI: str, ALogerName: str,
 
     # читаем конфигурацию из файла INI
     LFileNameINI = LUFile.ExpandFileName (AFileNameINI)
-    print ('LFileNameINI:',LFileNameINI)
+    # print ('LFileNameINI:',LFileNameINI)
 
     if LUFile.FileExists (LFileNameINI):
         # существует файл, который можно редактировать
@@ -1871,8 +1872,8 @@ def CreateLoggerFILEINI (AFileNameINI: str, ALogerName: str,
         #endif
     #endif
 
-    print ('LPathINI:',LPathINI)
-    print ('LFileNameINI:',LFileNameINI)
+    # print ('LPathINI:',LPathINI)
+    # print ('LFileNameINI:',LFileNameINI)
 
     if not SetEditINI:
         pass
@@ -1882,8 +1883,8 @@ def CreateLoggerFILEINI (AFileNameINI: str, ALogerName: str,
         LOptionName = 'args'
         if AFileNameLOG == '':
             LSectionName_01 = 'handler_FILE_01'
-            LOptionValue_01 = LINIFile.GetOption(LSectionName_01, LOptionName)
-            print ('LOptionValue_01:',LOptionValue_01)
+            LOptionValue_01 = LINIFile.GetOption(LSectionName_01, LOptionName, '')
+            # print ('LOptionValue_01:',LOptionValue_01)
             LFileNameLOG = LUFile.ExtractFileName (LOptionValue_01.split([',', '('])[0])
         else:
             LFileNameLOG = LUFile.ExtractFileName (AFileNameLOG)
@@ -1892,7 +1893,7 @@ def CreateLoggerFILEINI (AFileNameINI: str, ALogerName: str,
         if AFileNameLOGjson == '':
             LSectionName_02 = 'handler_FILE_02'
             LOptionValue_02 = LINIFile.GetOption(LSectionName_02, LOptionName)
-            print ('LOptionValue_02:',LOptionValue_02)
+            # print ('LOptionValue_02:',LOptionValue_02)
             LFileNameLOGjson = LUFile.ExtractFileName (LOptionValue_02.split([',', '('])[0])
         else:
             LFileNameLOGjson = LUFile.ExtractFileName (AFileNameLOGjson)
@@ -1907,7 +1908,7 @@ def CreateLoggerFILEINI (AFileNameINI: str, ALogerName: str,
         if LUos.GOSInfo.system == 'Linux':
             raise 'Linux не поддерживается'
         #endif
-        print('LOptionValue_01:',LOptionValue_01)
+        # print('LOptionValue_01:',LOptionValue_01)
 
         LINIFile.SetOption ('handler_FILE_01', LOptionName, LOptionValue_01)
         LOptionValue_02 = "('" + os.path.join (LDirectoryLOG, LFileNameLOGjson) + "',)"
@@ -1918,13 +1919,14 @@ def CreateLoggerFILEINI (AFileNameINI: str, ALogerName: str,
         if LUos.GOSInfo.system == 'Linux':
             raise 'Linux не поддерживается'
         #endif
-        print('LOptionValue_02:',LOptionValue_02)
+        # print('LOptionValue_02:',LOptionValue_02)
 
         LINIFile.SetOption ('handler_FILE_02', LOptionName, LOptionValue_02)
         LINIFile.UpdateFileINI ()
     #endif
 
-    print('ADirectoryLOG:',ADirectoryLOG)
+    # print ('INI:',ADirectoryLOG)
+    # print ('.......ADirectoryLOG:',ADirectoryLOG)
     if ADirectoryLOG == '':
         # log будет создан в текущем каталоге (по умолчанию)
         LDirectoryLOG = LUos.GetCurrentDir ()
@@ -1932,11 +1934,13 @@ def CreateLoggerFILEINI (AFileNameINI: str, ALogerName: str,
         # log будет создан в ADirectoryLOG
         LDirectoryLOG = LUFile.ExpandFileName (ADirectoryLOG)
     #endif
-    print('LDirectoryLOG:',LDirectoryLOG)
+    # print('LDirectoryLOG:',LDirectoryLOG)
 
     if not LUFile.DirectoryExists (LDirectoryLOG):
         LUFile.ForceDirectories(LDirectoryLOG)
     #endif
+
+    os.chdir (LDirectoryLOG)
 
     # print(LFileNameINI)
     logging.config.fileConfig (LFileNameINI, disable_existing_loggers=True,
