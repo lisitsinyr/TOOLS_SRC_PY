@@ -1677,8 +1677,9 @@ def CreateLoggerCONFIG (AFileNameCONFIG: str, ALogerName: str,
 #beginfunction
     global CONFIG
     CONFIG = {}
+    global LoggerTOOLS
 
-    print ('CONFIG:',ADirectoryLOG)
+    print ('CONFIG:ADirectoryLOG:',ADirectoryLOG)
 
     LPath = LUFile.ExtractFileDir(__file__)
     LFileNameCONFIG = os.path.join (LPath, AFileNameCONFIG)
@@ -1689,8 +1690,7 @@ def CreateLoggerCONFIG (AFileNameCONFIG: str, ALogerName: str,
                 CONFIG = json.load(FileCONFIG)
             #endwith
         except FileNotFoundError as ERROR:
-            print ('Невозможно открыть файл', ERROR)
-            LoggerTOOLS.error('Невозможно открыть файл')
+            print ('ERROR: Невозможно открыть файл', ERROR)
         #endtry
     else:
         CONFIG = copy.deepcopy (LOGGING_CONFIG)
@@ -1701,7 +1701,7 @@ def CreateLoggerCONFIG (AFileNameCONFIG: str, ALogerName: str,
 
     if AFileNameLOG == '':
         LOptionValue_01 = CONFIG['handlers']['FILE_01']['filename']
-        print ('LOptionValue_01:',LOptionValue_01)
+        # print ('LOptionValue_01:',LOptionValue_01)
         LFileNameLOG = LUFile.ExtractFileName (LOptionValue_01)
     else:
         LFileNameLOG = LUFile.ExtractFileName (AFileNameLOG)
@@ -1710,12 +1710,12 @@ def CreateLoggerCONFIG (AFileNameCONFIG: str, ALogerName: str,
 
     if AFileNameLOGjson == '':
         LOptionValue_02 = CONFIG['handlers']['FILE_02']['filename']
-        print ('LOptionValue_02:',LOptionValue_02)
+        # print ('LOptionValue_02:',LOptionValue_02)
         LFileNameLOGjson = LUFile.ExtractFileName (LOptionValue_02)
     else:
         LFileNameLOGjson = LUFile.ExtractFileName (AFileNameLOGjson)
     #endif
-    print('LFileNameLOGjson:',LFileNameLOGjson)
+    # print('LFileNameLOGjson:',LFileNameLOGjson)
 
     if ADirectoryLOG == '':
         # log будет создан в текущем каталоге (по умолчанию)
@@ -1731,11 +1731,11 @@ def CreateLoggerCONFIG (AFileNameCONFIG: str, ALogerName: str,
 
     # установить имена log файлов в CONFIG
     LOptionValue_01 = os.path.join (LDirectoryLOG, LFileNameLOG)
-    print('LOptionValue_01:', LOptionValue_01)
+    # print('LOptionValue_01:', LOptionValue_01)
     CONFIG ['handlers'] ['FILE_01'] ['filename'] = LOptionValue_01
 
     LOptionValue_02 = os.path.join (LDirectoryLOG, LFileNameLOGjson)
-    print('LOptionValue_02:', LOptionValue_02)
+    # print('LOptionValue_02:', LOptionValue_02)
     CONFIG ['handlers'] ['FILE_02'] ['filename'] = LOptionValue_02
 
     if len(CONFIG) > 0:
@@ -1772,8 +1772,7 @@ def CreateLoggerYAML (AFileNameYAML: str, ALogerName: str, ADirectoryLOG: str, A
                 CONFIG_YAML = yaml.load(FileCONFIG_YAML, Loader=yaml.FullLoader)
             #endwith
         except FileNotFoundError as ERROR:
-            # print ('Невозможно открыть файл', ERROR)
-            LoggerTOOLS.error ('ERROR: Невозможно открыть файл')
+            print ('ERROR: Невозможно открыть файл', ERROR)
         #endtry
     else:
         CONFIG_YAML = copy.deepcopy (LOGGING_CONFIG)
@@ -1849,7 +1848,7 @@ def CreateLoggerFILEINI (AFileNameINI: str, ALogerName: str,
 
     # читаем конфигурацию из файла INI
     LFileNameINI = LUFile.ExpandFileName (AFileNameINI)
-    # print ('LFileNameINI:',LFileNameINI)
+    # print ('LFileNameINI:', LFileNameINI)
 
     if LUFile.FileExists (LFileNameINI):
         # существует файл, который можно редактировать
@@ -1857,9 +1856,10 @@ def CreateLoggerFILEINI (AFileNameINI: str, ALogerName: str,
         LPathINI = LUFile.ExtractFileDir (LFileNameINI)
         LFileNameINI = os.path.join (LPathINI, LUFile.ExtractFileName (AFileNameINI))
     else:
+        # print ('LFileNameINI:', LFileNameINI)
         LPathINI = LUos.GetCurrentDir ()
         LFileNameINI = os.path.join (LPathINI, LUFile.ExtractFileName (AFileNameINI))
-        # print ('LFileNameINI: ', LFileNameINI)
+        # print ('LFileNameINI:', LFileNameINI)
         if LUFile.FileExists (LFileNameINI):
             # существует файл в текущем каталоге, который можно редактировать
             SetEditINI = True
@@ -1872,8 +1872,8 @@ def CreateLoggerFILEINI (AFileNameINI: str, ALogerName: str,
         #endif
     #endif
 
-    # print ('LPathINI:',LPathINI)
-    # print ('LFileNameINI:',LFileNameINI)
+    print ('LPathINI:',LPathINI)
+    print ('LFileNameINI:',LFileNameINI)
 
     if not SetEditINI:
         pass
@@ -1906,7 +1906,7 @@ def CreateLoggerFILEINI (AFileNameINI: str, ALogerName: str,
             LOptionValue_01 = LOptionValue_01.replace ('\\', "\\\\")
         #endif
         if LUos.GOSInfo.system == 'Linux':
-            raise 'Linux не поддерживается'
+            raise 'ERROR: Linux не поддерживается'
         #endif
         # print('LOptionValue_01:',LOptionValue_01)
 
@@ -1917,7 +1917,7 @@ def CreateLoggerFILEINI (AFileNameINI: str, ALogerName: str,
             LOptionValue_02 = LOptionValue_02.replace ("\\", "\\\\")
         #endif
         if LUos.GOSInfo.system == 'Linux':
-            raise 'Linux не поддерживается'
+            raise 'ERROR: Linux не поддерживается'
         #endif
         # print('LOptionValue_02:',LOptionValue_02)
 
@@ -1925,8 +1925,8 @@ def CreateLoggerFILEINI (AFileNameINI: str, ALogerName: str,
         LINIFile.UpdateFileINI ()
     #endif
 
-    # print ('INI:',ADirectoryLOG)
-    # print ('.......ADirectoryLOG:',ADirectoryLOG)
+    # print ('INI:ADirectoryLOG:',ADirectoryLOG)
+
     if ADirectoryLOG == '':
         # log будет создан в текущем каталоге (по умолчанию)
         LDirectoryLOG = LUos.GetCurrentDir ()
@@ -1934,7 +1934,7 @@ def CreateLoggerFILEINI (AFileNameINI: str, ALogerName: str,
         # log будет создан в ADirectoryLOG
         LDirectoryLOG = LUFile.ExpandFileName (ADirectoryLOG)
     #endif
-    # print('LDirectoryLOG:',LDirectoryLOG)
+    # print('...LDirectoryLOG:',LDirectoryLOG)
 
     if not LUFile.DirectoryExists (LDirectoryLOG):
         LUFile.ForceDirectories(LDirectoryLOG)
@@ -2001,20 +2001,20 @@ def CreateTFileMemoLog () -> TFileMemoLog:
 #-------------------------------------------------
 # Инициализация системы logging
 #-------------------------------------------------
-GLoggerFILEINI = None
-GLoggerCONFIG = None
-LoggerTOOLS = None
-LoggerAPPS = None
-LoggerTLogger = None
-FileMemoLog = None
+# GLoggerFILEINI = None
+# GLoggerCONFIG = None
+# LoggerTOOLS = None
+# LoggerAPPS = None
+# LoggerTLogger = None
+# FileMemoLog = None
 
 def STARTLogging (T: TTypeSETUPLOG, ADirectoryLOG: str, AFileNameLOG: str, AFileNameLOGjson: str) -> None:
     """STARTLogging"""
 #beginfunction
     global STATLogging
     STATLogging = False
-    # print (sys._getframe (0).f_code.co_name, '...')
 
+    # print (sys._getframe (0).f_code.co_name, '...')
     # print (inspect.currentframe().f_code.co_name, '...')
     # print (inspect.stack () [0] [3], '...')
     # print (traceback.extract_stack () [-1].name, '...')
@@ -2062,7 +2062,8 @@ def STARTLogging (T: TTypeSETUPLOG, ADirectoryLOG: str, AFileNameLOG: str, AFile
     #-------------------------------------------------
     CLoggerTOOLS = 'TOOLS__'
     LoggerTOOLS = logging.getLogger (CLoggerTOOLS)
-    LoggerTOOLS.disabled = False
+    # LoggerTOOLS.disabled = False
+    # LoggerTOOLS.info ('info')
     # print('LoggerTOOLS' in vars () or 'LoggerTOOLS' in globals ())
     # print('LoggerTOOLS' in vars ())
     # print('LoggerTOOLS' in globals ())
