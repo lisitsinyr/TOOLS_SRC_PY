@@ -115,7 +115,7 @@ class TShedulerEventItem (object):
         # удалить объект
         del self.__FList
         LClassName = self.__class__.__name__
-        s = '{} уничтожен'.format (LClassName)
+        # s = '{} уничтожен'.format (LClassName)
         # LUConst.LULogger.log (LULog.DEBUGTEXT, s)
         #print (s)
     #endfunction
@@ -452,7 +452,7 @@ class TSheduler (object):
         del self.__FShedulerEvents
         del self.__FNameEvents
         LClassName = self.__class__.__name__
-        s = '{} уничтожен'.format(LClassName)
+        # s = '{} уничтожен'.format(LClassName)
         # LUConst.LULogger.log (LULog.DEBUGTEXT, s)
     #endfunction
 
@@ -560,7 +560,7 @@ class TSheduler (object):
     def run_Function(self):
         """__run_Function"""
     #beginfunction
-        s = '__run_Function...'
+        # s = '__run_Function...'
         # LULog.LoggerTOOLS_AddDebug (s)
         if self.__FEnable:
             LPresentNow = LUDateTime.Now ()
@@ -659,7 +659,7 @@ class TSheduler (object):
     def __Second (self):
         """Second"""
     #beginfunction
-        s = 'Second...'
+        # s = 'Second...'
         # LULog.LoggerTOOLS_AddDebug (s)
         if self.__FEnable:
             LPresent: datetime = LUDateTime.Now()
@@ -771,7 +771,7 @@ class TShedulerThread (threading.Thread):
         """destructor"""
     #beginfunction
         LClassName = self.__class__.__name__
-        s = '{} уничтожен'.format(LClassName)
+        # s = '{} уничтожен'.format(LClassName)
         # LUConst.LULogger.log (LULog.DEBUGTEXT, s)
     #endfunction
 
@@ -797,7 +797,7 @@ class TShedulerThread (threading.Thread):
         super ().run()
 
         if self.__FSheduler.DTEvents == 0:
-            self.__FSheduler.CreateNextEvent ()
+            self.__FSheduler.CreateNextEvent (False)
         #endif
         while not self.__FStopThread:
             self.__FSheduler.run_Function ()
@@ -862,7 +862,7 @@ class TShedulerTimer (threading.Timer):
         """destructor"""
     #beginfunction
         LClassName = self.__class__.__name__
-        s = '{} уничтожен'.format (LClassName)
+        # s = '{} уничтожен'.format (LClassName)
         # LUConst.LULogger.log (LULog.DEBUGTEXT, s)
     #endfunction
 

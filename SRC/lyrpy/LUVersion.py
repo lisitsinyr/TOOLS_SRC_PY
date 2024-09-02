@@ -24,6 +24,9 @@ import platform
 #------------------------------------------
 import datetime
 
+import win32api
+
+
 # if platform.system() == 'Windows':
 #     import win32api
 #     import win32con
@@ -71,7 +74,7 @@ class TVersionInfo:
     def __del__(self):
     #beginfunction
         LClassName = self.__class__.__name__
-        s = '{} уничтожен'.format (LClassName)
+        # s = '{} уничтожен'.format (LClassName)
         #print (s)
     #endfunction
 

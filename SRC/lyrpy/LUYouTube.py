@@ -26,8 +26,8 @@ import sys
 #------------------------------------------
 # БИБЛИОТЕКИ LU
 #------------------------------------------
-import lyrpy.LUObjectsYT
-import lyrpy.LUFile
+import lyrpy.LUObjectsYT as LUObjectsYT
+import lyrpy.LUFile as LUFile
 
 # --------------------------------------------
 # TYouTubeObjectsItem
@@ -52,7 +52,7 @@ class TYouTubeObjectsItem (object):
         # удалить объект
         del self.__FYouTubeObject
         LClassName = self.__class__.__name__
-        s = '{} уничтожен'.format (LClassName)
+        # s = '{} уничтожен'.format (LClassName)
         # LULog.LoggerTOOLS_AddLevel (LULog.DEBUGTEXT, s)
     #endfunction
 
@@ -66,7 +66,7 @@ class TYouTubeObjectsItem (object):
         return self.__FYouTubeObject
     #endfunction
     @YouTubeObject.setter
-    def YouTubeObject(self, Value: lyrpy.LUObjectsYT.TYouTubeObject):
+    def YouTubeObject(self, Value: LUObjectsYT.TYouTubeObject):
     #beginfunction
         self.__FYouTubeObject = Value
     #endfunction
@@ -97,7 +97,7 @@ class TYouTubeObjectsCollection (list):
     #beginfunction
         self.clear()            # удалить все items
         LClassName = self.__class__.__name__
-        s = '{} уничтожен'.format (LClassName)
+        # s = '{} уничтожен'.format (LClassName)
         # LULog.LoggerTOOLS_AddLevel (LULog.DEBUGTEXT, s)
     #endfunction
 
@@ -168,7 +168,7 @@ class TYouTube(object):
     #beginfunction
         del self.__FYouTubeObjectsCollection
         LClassName = self.__class__.__name__
-        s = '{} уничтожен'.format (LClassName)
+        # s = '{} уничтожен'.format (LClassName)
         # LULog.LoggerTOOLS_AddLevel (LULog.DEBUGTEXT, s)
         #print (s)
     #endfunction

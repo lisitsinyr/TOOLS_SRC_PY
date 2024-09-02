@@ -153,7 +153,7 @@ def DayOfWeek (ADateTime: datetime.date):
 def DaysInMonth (AYear: int, AMonth: int):
     """DaysInMonth"""
 #beginfunction
-    return monthrange (AYear, AMonth) [1]
+    return calendar.monthrange (AYear, AMonth) [1]
 #endfunction
 
 #---------------------------------------------------------------

@@ -14,6 +14,7 @@ __annotations__ = """
  =======================================================
 """
 
+import errno
 #------------------------------------------
 # БИБЛИОТЕКИ python
 #------------------------------------------
@@ -51,6 +52,7 @@ import lyrpy.LUStrDecode as LUStrDecode
 import lyrpy.LUDateTime as LUDateTime
 import lyrpy.LUos as LUos
 import lyrpy.LULog as LULog
+# import lyrpy.LUFile as LUFile
 
 """
 #--------------------------------------------------------------------------------
@@ -134,8 +136,8 @@ def DeleteDirectoryTree (ADir: str) -> bool:
     def remove_readonly (func, path, _):
         """remove_readonly"""
     #beginfunction
-        s = f'Clear the readonly bit and reattempt the removal {path:s} ...'
-        LULog.LoggerTOOLS_AddLevel(logging.DEBUG, s)
+        Ls = f'Clear the readonly bit and reattempt the removal {path:s} ...'
+        LULog.LoggerTOOLS_AddLevel(logging.DEBUG, Ls)
         os.chmod (path, stat.S_IWRITE)
         func (path)
     #endfunction
@@ -156,6 +158,7 @@ def DeleteDirectoryTree (ADir: str) -> bool:
     #endfunction
 
 #beginfunction
+    LResult = True
     if DirectoryExists (ADir):
         s = f'DeleteDirectoryTree {ADir:s} ...'
         LULog.LoggerTOOLS_AddLevel(logging.DEBUG, s)
@@ -189,8 +192,8 @@ def DirectoryClear (ADir: str) -> bool:
             for file in files:
                 os.remove (os.path.join (root, file))
             #endfor
-            for dir in dirs:
-                os.rmdir (os.path.join (root, dir))
+            for ldir in dirs:
+                os.rmdir (os.path.join (root, ldir))
             #endfor
         #endfor
         LResult = True
@@ -741,7 +744,7 @@ def SetFileAttr (AFileName: str, Aattr: int, AClear: bool):
                 s = f'[clear]: {bin (LattrNew):s} {LattrNew:d} {hex (LattrNew):s} {bin (LattrNew):s}'
                 LULog.LoggerTOOLS_AddLevel (logging.DEBUG, s)
             else:
-                LattrNew = Lattr | Aflags
+                LattrNew = Lattr | ~Aattr
                 s = f'[set]: {bin (LattrNew):s} {LattrNew:d} {hex (LattrNew):s} {bin (LattrNew):s}'
                 LULog.LoggerTOOLS_AddLevel (logging.DEBUG, s)
             #endif
@@ -764,11 +767,13 @@ def SetFileAttr (AFileName: str, Aattr: int, AClear: bool):
 #-------------------------------------------------------------------------------
 # SetFileMode
 #-------------------------------------------------------------------------------
-def SetFileMode (AFileName: str, Amode: int):
+def SetFileMode (AFileName: str, Amode: int, AClear: bool, Aflags: int):
     """SetFileMode"""
 #beginfunction
     s = f'SetFileMode: {Amode:d} {hex (Amode):s} {bin (Amode):s}'
     LULog.LoggerTOOLS_AddLevel (logging.DEBUG, s)
+
+    Lattr = 0
 
     LOSInfo = LUos.TOSInfo ()
     match LOSInfo.system:
@@ -799,13 +804,13 @@ def SetFileMode (AFileName: str, Amode: int):
 #-------------------------------------------------------------------------------
 # SetFileFlags
 #-------------------------------------------------------------------------------
-def SetFileFlags (AFileName: str, Aflags: int):
+def SetFileFlags (AFileName: str, Aflags: int, AClear: bool):
     """SetFileMode"""
 #beginfunction
     s = f'SetFileMode: {Aflags:d} {hex (Aflags):s} {bin (Aflags):s}'
     LULog.LoggerTOOLS_AddLevel (logging.DEBUG, s)
 
-    LOSInfo = lyrpy.LUos.TOSInfo ()
+    LOSInfo = LUos.TOSInfo ()
     match LOSInfo.system:
         case 'Windows':
             raise NotImplementedError('SetFileAttr Windows not implemented...')
@@ -821,7 +826,7 @@ def SetFileFlags (AFileName: str, Aflags: int):
                 s = f'[clear]: {bin (LflagsNew):s} {LflagsNew:d} {hex (LflagsNew):s} {bin (LflagsNew):s}'
                 LULog.LoggerTOOLS_AddLevel (logging.DEBUG, s)
             else:
-                LflagsNew = Lflags | Aflags
+                LflagsNew = Lattr | ~Aflags
                 s = f'[set]: {bin (LflagsNew):s} {LflagsNew:d} {hex (LflagsNew):s} {bin (LflagsNew):s}'
                 LULog.LoggerTOOLS_AddLevel (logging.DEBUG, s)
             #endif
@@ -851,7 +856,7 @@ def FileDelete (AFileName: str) -> bool:
                     if Lattr & stat.FILE_ATTRIBUTE_READONLY:
                         s = f'Clear ReadOnly ...'
                         LULog.LoggerTOOLS_AddLevel (logging.DEBUG, s)
-                        LUFile.SetFileAttr (AFileName, stat.FILE_ATTRIBUTE_READONLY, True)
+                        SetFileAttr (AFileName, stat.FILE_ATTRIBUTE_READONLY, True)
 
                         # FileSetAttr (FileName, FileGetAttr(FileName) and (faReadOnly xor $FF));
                         # Change the file's permissions to writable
@@ -884,6 +889,8 @@ def FileCopy (AFileNameSource: str, AFileNameDest: str, Overwrite: bool) -> bool
     s = f'FileCopy: {AFileNameSource:s} -> {AFileNameDest:s}'
     LULog.LoggerTOOLS_AddLevel (logging.DEBUG, s)
 
+    LResult = True
+
     if FileExists (AFileNameSource):
 
         LDestPath = ExtractFileDir (AFileNameDest)
@@ -891,7 +898,7 @@ def FileCopy (AFileNameSource: str, AFileNameDest: str, Overwrite: bool) -> bool
             ForceDirectories (LDestPath)
         #endif
 
-        LOSInfo = lyrpy.LUos.TOSInfo ()
+        LOSInfo = LUos.TOSInfo ()
         match LOSInfo.system:
             case 'Windows':
                 try:
@@ -901,11 +908,11 @@ def FileCopy (AFileNameSource: str, AFileNameDest: str, Overwrite: bool) -> bool
 
                     # LResult = shutil.copy (AFileNameSource, AFileNameDest) != ''
 
+                    # LResult = True
                     LResult = shutil.copy2 (AFileNameSource, AFileNameDest) != ''
                     # LResult = shutil.copy2 (AFileNameSource, LDestPath) != ''
                     # shutil.copystat (AFileNameSource, AFileNameDest)
 
-                    LResult = True
                 except:
                     s = f'ERROR: FileCopy ...'
                     LULog.LoggerTOOLS_AddLevel (logging.DEBUG, s)
@@ -913,9 +920,9 @@ def FileCopy (AFileNameSource: str, AFileNameDest: str, Overwrite: bool) -> bool
                 #endtry
             case 'Linux':
                 # unix
-                LFileNameSource_stat = os.stat (AFileNameSource)
-                Lowner = LFileNameSource_stat [stat.ST_UID]
-                Lgroup = LFileNameSource_stat [stat.ST_GID]
+                # LFileNameSource_stat = os.stat (AFileNameSource)
+                # Lowner = LFileNameSource_stat [stat.ST_UID]
+                # Lgroup = LFileNameSource_stat [stat.ST_GID]
                 # os.chown (AFileNameDest, Lowner, Lgroup)
                 raise NotImplementedError('FileCopy Linux not implemented...')
             case _:
@@ -934,12 +941,11 @@ def FileMove (AFileNameSource: str, APathNameDest: str) -> bool:
 #beginfunction
     s = f'FileMove: {AFileNameSource:s} -> {APathNameDest:s}'
     LULog.LoggerTOOLS_AddLevel (logging.DEBUG, s)
-    LResult = True
-    if not LUFile.DirectoryExists(APathNameDest):
-        LUFile.ForceDirectories(APathNameDest)
+    if not DirectoryExists(APathNameDest):
+        ForceDirectories(APathNameDest)
     #endif
-    LFileNameSource = ExtractFileName (AFileNameSource)
-    LFileNameDest = os.path.join (APathNameDest, LFileNameSource)
+    # LFileNameSource = ExtractFileName (AFileNameSource)
+    # LFileNameDest = os.path.join (APathNameDest, LFileNameSource)
     LResult = shutil.move(AFileNameSource, APathNameDest, copy_function=shutil.copy2())
     return LResult
 #endfunction

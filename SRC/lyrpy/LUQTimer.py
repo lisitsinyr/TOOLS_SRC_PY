@@ -88,7 +88,7 @@ class TQTimer (QTimer):
         """destructor"""
     #beginfunction
         LClassName = self.__class__.__name__
-        s = '{} уничтожен'.format (LClassName)
+        # s = '{} уничтожен'.format (LClassName)
         # LULog.LoggerTOOLS_AddLevel (LULog.DEBUGTEXT, s)
         #print (s)
     #endfunction
@@ -133,7 +133,7 @@ class TQTimer (QTimer):
     def __run_TEST(self):
         """__run_TEST..."""
     #beginfunction
-        s = '__run_TEST...'
+        # s = '__run_TEST...'
         # LULog.LoggerTOOLS_AddDebug (s)
 
         # Do something on the worker thread

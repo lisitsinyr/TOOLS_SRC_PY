@@ -67,7 +67,7 @@ class TQThread (QThread):
         """destructor"""
     #beginfunction
         LClassName = self.__class__.__name__
-        s = '{} уничтожен'.format (LClassName)
+        # s = '{} уничтожен'.format (LClassName)
         # LULog.LoggerTOOLS_AddLevel (LULog.DEBUGTEXT, s)
         #print (s)
     #endfunction
@@ -99,7 +99,7 @@ class TQThread (QThread):
         self.signals.signal_str.emit ("This text comes to Main thread from our Worker thread.")
 
         while not self.__FStopThread:
-            s = 'Выполнение потока...'
+            # s = 'Выполнение потока...'
             # LULog.LoggerTOOLS_AddDebug (s)
             Lval = psutil.cpu_percent ()
             self.emit(QtCore.SIGNAL('CPU_VALUE'), Lval)

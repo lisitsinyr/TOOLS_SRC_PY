@@ -60,6 +60,7 @@ class TINIFile (configparser.ConfigParser):
     def __GetINIFileName (AFileName: str) -> str:
         """__GetINIFileName"""
     #beginfunction
+        LResult = ''
         P = LUFile.ExtractFileDir (AFileName)
         F = LUFile.ExtractFileName (AFileName)
         E = LUFile.ExtractFileExt (AFileName)
@@ -101,7 +102,7 @@ class TINIFile (configparser.ConfigParser):
         """destructor"""
     #beginfunction
         LClassName = self.__class__.__name__
-        s = '{} уничтожен'.format (LClassName)
+        # s = '{} уничтожен'.format (LClassName)
         # LULog.LoggerTOOLS_AddLevel (LULog.DEBUGTEXT, s)
         #print (s)
     #endfunction

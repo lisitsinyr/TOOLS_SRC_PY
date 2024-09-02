@@ -26,6 +26,7 @@ import threading
 #------------------------------------------
 # БИБЛИОТЕКА LU
 #------------------------------------------
+import lyrpy.LULog as LULog
 
 # Create the Worker Thread
 class TTimer (threading.Timer):
@@ -60,7 +61,7 @@ class TTimer (threading.Timer):
         """destructor"""
     #beginfunction
         LClassName = self.__class__.__name__
-        s = '{} уничтожен'.format (LClassName)
+        # s = '{} уничтожен'.format (LClassName)
         # LULog.LoggerTOOLS_AddLevel (LULog.DEBUGTEXT, s)
         #print (s)
     #endfunction
@@ -100,7 +101,7 @@ class TTimer (threading.Timer):
         # self.Function()
 
         while not self.__FStopTimer:
-            s = 'Выполнение таймера...'
+            # s = 'Выполнение таймера...'
             # LULog.LoggerTOOLS_AddDebug (s)
             continue
         #endwhile

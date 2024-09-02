@@ -90,7 +90,7 @@ class TThread (threading.Thread):
         """destructor"""
     #beginfunction
         LClassName = self.__class__.__name__
-        s = '{} уничтожен'.format (LClassName)
+        # s = '{} уничтожен'.format (LClassName)
         # LULog.LoggerTOOLS_AddLevel (LULog.DEBUGTEXT, s)
         #print (s)
     #endfunction
@@ -127,7 +127,7 @@ class TThread (threading.Thread):
         LULog.LoggerTOOLS_AddDebug (s)
         super ().run()
         while not self.__FStopThread:
-            s = 'Выполнение потока...'
+            # s = 'Выполнение потока...'
             # LULog.LoggerTOOLS_AddDebug (s)
             continue
         #endwhile
