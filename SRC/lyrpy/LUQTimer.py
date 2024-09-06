@@ -110,7 +110,7 @@ class TQTimer (QTimer):
         """start - Запуск таймера..."""
     #beginfunction
         s = 'Запуск таймера '+self.FQTimerName+'...'
-        LULog.LoggerTOOLS_AddLevel (LULog.DEBUGTEXT, s)
+        LULog.LoggerAdd (LULog.LoggerTOOLS, LULog.DEBUGTEXT, s)
         super ().start ()
         self.__Fidle = True
     #endfunction
@@ -122,7 +122,7 @@ class TQTimer (QTimer):
         """stop - Остановить таймер..."""
     #beginfunction
         s = 'Остановка таймера '+self.FQTimerName+'...'
-        LULog.LoggerTOOLS_AddLevel (LULog.DEBUGTEXT, s)
+        LULog.LoggerAdd (LULog.LoggerTOOLS, LULog.DEBUGTEXT, s)
         super ().stop ()
     #endfunction
 

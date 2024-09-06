@@ -14,6 +14,8 @@ __annotations__ = """
  =======================================================
 """
 
+import logging
+
 #------------------------------------------
 # БИБЛИОТЕКИ python
 #------------------------------------------
@@ -90,7 +92,7 @@ class TQThread (QThread):
     #beginfunction
         super ().run()
         s = 'run - Запуск потока...'
-        LULog.LoggerTOOLS_AddDebug (s)
+        LULog.LoggerAdd (LULog.LoggerTOOLS, logging.DEBUG, s)
 
         # Do something on the worker thread
         a = 1 + 1

@@ -133,7 +133,8 @@ def __ListFile (APathSource, AMask, APathDest,
                 if _FuncDir:
                     # s = f'_FuncDir: {_FuncDir.__name__:s}'
                     # LULog.LoggerTOOLS_AddLevel (logging.DEBUG, s)
-                    _FuncDir (LUFile.ExpandFileName (LFile.path), APathDest)
+                    # _FuncDir (LUFile.ExpandFileName (LFile.path), APathDest)
+                    pass
                 #endif
             #endif
         #endfor
@@ -177,7 +178,8 @@ def __ListDir (APathSource, AMask, ASubdir, APathDest,
     #endmatch
     __OUTFILE (s, _OutFile)
 
-    LFileCount = __ListFile (APathSource, AMask, APathDest, _OutFile, _Option, _FuncDir, _FuncFile)
+    # LFileCount = __ListFile (APathSource, AMask, APathDest, _OutFile, _Option, _FuncDir, _FuncFile)
+    LFileCount = __ListFile (APathSource, AMask, APathDest, _OutFile, _Option, None, _FuncFile)
 
     match _Option:
         case 1 | 11:
@@ -194,6 +196,15 @@ def __ListDir (APathSource, AMask, ASubdir, APathDest,
         for LFile in LFiles:
             if not LFile.is_symlink():
                 if LFile.is_dir (): # and (not LFile.name.startswith('.')):
+                    #------------------------------------------------------------
+                    #
+                    #------------------------------------------------------------
+                    if _FuncDir:
+                        # s = f'_FuncDir: {_FuncDir.__name__:s}'
+                        # LULog.LoggerTOOLS_AddLevel (logging.DEBUG, s)
+                        _FuncDir (LUFile.ExpandFileName (LFile.path), APathDest)
+                    #endif
+
                     #------------------------------------------------------------
                     # class os.DirEntry - Это каталог
                     #------------------------------------------------------------
@@ -237,15 +248,15 @@ def BacFiles (APathSource, AMask, ASubDir, APathDest,
         Lattr = LUFile.GetFileAttr (_APathSource)
         if not _ASync:
             if not LUFile.DirectoryExists(LPathDest):
-                Ls = f'Create {LPathDest:s} ...'
-                LULog.LoggerTOOLS_AddLevel (logging.DEBUG, Ls)
+                s = f'Create {LPathDest:s} ...'
+                LULog.LoggerAdd (LULog.LoggerTOOLS, logging.DEBUG, s)
                 LUFile.ForceDirectories(LPathDest)
                 LUFile.SetFileAttr(LPathDest, Lattr, False)
             #endif
         else:
             if not LUFile.DirectoryExists(LPathDest):
-                Ls = f'Delete {LPathSource:s} ...'
-                LULog.LoggerTOOLS_AddLevel (logging.DEBUG, Ls)
+                s = f'Delete {LPathSource:s} ...'
+                LULog.LoggerAdd (LULog.LoggerTOOLS, logging.DEBUG, s)
                 LUFile.DeleteDirectoryTree(LPathSource)
             #endif
         #endif
@@ -314,8 +325,8 @@ def BacFiles (APathSource, AMask, ASubDir, APathDest,
         # Copy
         #--------------------------------------------------------------------
         if LCopy == True:
-            Ls = f'Copy {LFileNameSource:s} -> {LFileNameDest:s} ...'
-            LULog.LoggerTOOLS_AddLevel (logging.DEBUG, Ls)
+            s = f'Copy {LFileNameSource:s} -> {LFileNameDest:s} ...'
+            LULog.LoggerAdd (LULog.LoggerTOOLS, logging.DEBUG, s)
             LUFile.FileCopy (LFileNameSource, LFileNameDest, True)
         #endif
 
@@ -323,8 +334,8 @@ def BacFiles (APathSource, AMask, ASubDir, APathDest,
         # Delete
         #--------------------------------------------------------------------
         if LDelete == True:
-            Ls = f'Delete {LFileNameSource:s} ...'
-            LULog.LoggerTOOLS_AddLevel (logging.DEBUG, Ls)
+            s = f'Delete {LFileNameSource:s} ...'
+            LULog.LoggerAdd (LULog.LoggerTOOLS, logging.DEBUG, s)
             LUFile.FileDelete (LFileNameSource)
         #endif
     #endfunction
@@ -333,8 +344,8 @@ def BacFiles (APathSource, AMask, ASubDir, APathDest,
     if (APathSource != "") and (APathDest != ""):
         # LBaseName = os.path.basename (APathSource)
         LPathDest = APathDest
-        s = f'BacFiles: {APathSource:s} {AMask:s} => {APathDest:s} ...'
-        LULog.LoggerTOOLS_AddLevel (LULog.TEXT, s)
+        Ls = f'BacFiles: {APathSource:s} {AMask:s} => {APathDest:s} ...'
+        LULog.LoggerAdd (LULog.LoggerTOOLS, logging.DEBUG, Ls)
         __ListDir (APathSource, AMask, ASubDir, LPathDest, _OutFile, _Option, FuncDir, FuncFile)
     #endif
 #endfunction
@@ -345,7 +356,7 @@ def BacFiles (APathSource, AMask, ASubDir, APathDest,
 def SyncFiles (APathSource, AMask, APathDest, _OutFile, _Option):
 #beginfunction
     s = f'SyncFiles: {APathSource:s} {AMask:s} => {APathDest:s} ...'
-    LULog.LoggerTOOLS_AddLevel (LULog.TEXT, s)
+    LULog.LoggerAdd (LULog.LoggerTOOLS, LULog.TEXT, s)
 
     BacFiles (APathSource, AMask, True, APathDest, _OutFile, _Option, False)
     BacFiles (APathDest, AMask, True, APathSource, _OutFile, _Option, True)
@@ -359,7 +370,7 @@ def DirFiles (APathSource, AMask, ASubDir,
 #beginfunction
     if APathSource != "":
         s = f'DirFiles: {APathSource:s} {AMask:s} ...'
-        LULog.LoggerTOOLS_AddLevel (LULog.TEXT, s)
+        LULog.LoggerAdd (LULog.LoggerTOOLS, LULog.TEXT, s)
         __ListDir(APathSource, AMask, ASubDir, '', _OutFile, _Option, _FuncDir, _FuncFile)
     #endif
 #endfunction
@@ -400,7 +411,8 @@ def __FakeDir (APathSource,
     # Dir
     #------------------------------------------------------------
     # LBaseName = os.path.basename (APathSource)
-    LULog.LoggerTOOLS_AddLevel (LULog.TEXT, LUFile.ExpandFileName (APathSource))
+    s = LUFile.ExpandFileName (APathSource)
+    LULog.LoggerAdd (LULog.LoggerTOOLS, LULog.TEXT, s)
 
     #------------------------------------------------------------
     #
@@ -437,7 +449,7 @@ def FakeFiles (APathSource,
 #beginfunction
     if APathSource != "":
         s = f'FakeFiles: {APathSource:s} ...'
-        LULog.LoggerTOOLS_AddLevel (LULog.TEXT, s)
+        LULog.LoggerAdd (LULog.LoggerTOOLS, LULog.TEXT, s)
         __FakeDir(APathSource, _OutFile, _Option, _FuncDir, _FuncFile)
     #endif
 #endfunction
@@ -459,15 +471,15 @@ def DelFiles (APathSource, AMask, ASubDir, _OutFile, _Option, _Older: int):
         # print ((LDay - LFileTimeSource).days)
         if (LDay - LFileTimeSource).days > _Older:
             s = f'Delete {AFileName:s} ...'
-            LULog.LoggerTOOLS_AddLevel (logging.DEBUG, s)
+            LULog.LoggerAdd (LULog.LoggerTOOLS, logging.DEBUG, s)
             LUFile.FileDelete(AFileName)
         #endif
     #endfunction
 
 #beginfunction
     if APathSource != "":
-        Lstat = f'DelFiles: {APathSource:s} {AMask:s} ...'
-        LULog.LoggerTOOLS_AddLevel (LULog.TEXT, Lstat)
+        s = f'DelFiles: {APathSource:s} {AMask:s} ...'
+        LULog.LoggerAdd (LULog.LoggerTOOLS, LULog.TEXT, s)
         __ListDir (APathSource, AMask, ASubDir, '', _OutFile, _Option, None, DelFile)
     #endif
 #endfunction

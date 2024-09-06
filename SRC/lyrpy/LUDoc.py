@@ -38,8 +38,7 @@ def PrintInfoObject (AObject):
     # print (inspect.stack () [0] [3], '...')
     # print (traceback.extract_stack () [-1].name, '...')
     s = f'{AObject}'
-    #LULog_LoggerTOOLS_log(LULog.DEBUGTEXT, s)
-    LULog.LoggerTOOLS_AddLevel(LULog.DEBUGTEXT, s)
+    LULog.LoggerAdd (LULog.LoggerTOOLS, LULog.DEBUGTEXT, s)
 #endfunction
 
 #---------------------------------------------------------------

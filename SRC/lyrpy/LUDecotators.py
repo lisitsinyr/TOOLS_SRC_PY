@@ -18,7 +18,6 @@ __annotations__ = """
 # БИБЛИОТЕКИ python
 #------------------------------------------
 import time
-import logging
 from functools import wraps
 import smtplib
 import traceback
@@ -45,7 +44,7 @@ def TIMING(func):
         result = func(*args, **kwargs)
         end_time = time.time()
         s = f"Функция {func.__name__} работала {end_time - start_time} секунд..."
-        LULog.LoggerTOOLS_AddLevel (LULog.DEBUGTEXT, s)
+        LULog.LoggerAdd (LULog.LoggerTOOLS, LULog.DEBUGTEXT, s)
         return result
     #endfunction
 

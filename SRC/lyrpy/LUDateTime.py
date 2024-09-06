@@ -18,9 +18,7 @@ __annotations__ = """
 # БИБЛИОТЕКИ python
 #------------------------------------------
 import datetime
-import time
 import calendar
-import logging
 import platform
 
 #------------------------------------------
@@ -30,7 +28,6 @@ import platform
 #------------------------------------------
 # БИБЛИОТЕКИ LU
 #------------------------------------------
-import lyrpy.LUSupport as LUSupport
 import lyrpy.LUStrUtils as LUStrUtils
 
 #------------------------------------------

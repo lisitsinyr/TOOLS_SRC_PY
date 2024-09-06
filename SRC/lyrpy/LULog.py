@@ -50,15 +50,13 @@ import lyrpy.LUParserINI as LUParserINI
 import lyrpy.LUDict as LUDict
 import lyrpy.LUSupport as LUSupport
 
-# ===========================================================================
-# CONST
-# ===========================================================================
 import rich
 import rich.console as console
 GConsoleRich = rich.console.Console ()
 
-STATLogging = True
-
+# ===========================================================================
+# CONST
+# ===========================================================================
 """CONST"""
 ctlsNOTSET = ' '
 ctlsDEBUG = 'D'
@@ -283,9 +281,9 @@ class TFileMemoLog (object):
     #beginfunction
         del self.__FLogStrings
         del self.__FLogSave
-        LClassName = self.__class__.__name__
-        s = '{} уничтожен'.format (LClassName)
-        #print (s)
+        # LClassName = self.__class__.__name__
+        # s = '{} уничтожен'.format (LClassName)
+        # print (s)
     #endfunction
 
     def Clear(self):
@@ -461,7 +459,7 @@ class TFileMemoLog (object):
                 #endfor
             except:
                 s = f'TruncateLog: Неправильная кодировка журнала!'
-                LoggerTOOLS.error (s)
+                LoggerTOOLS.error(s)
             finally:
                 LFile.close ()
             # TruncateMemo (ts)
@@ -594,6 +592,7 @@ class TFileMemoLog (object):
         self.__FLogStringAnsi = Value
         if self.LogEnabled:
             self._Execute(T)
+        #endif
     #endfunction
 
     def AddLogFile (self, AFileName: str):
@@ -603,6 +602,7 @@ class TFileMemoLog (object):
             LEncoding = LUFile.GetFileEncoding (AFileName)
             if LEncoding == '':
                 LEncoding = LUFile.cDefaultEncoding
+            #endif
             try:
                 # работа с файлом
                 with open (AFileName, 'r', encoding = LEncoding) as LFile:
@@ -1569,7 +1569,7 @@ def GetHandler (ALogger: logging.Logger, ANameHandler: str):
     """Printhandlers"""
 #beginfunction
     for item in ALogger.root.handlers:
-        s = f'{item.name}={item}'
+        # s = f'{item.name}={item}'
         # LoggerTOOLS.info(s)
         if item.name == ANameHandler:
             return item
@@ -1593,6 +1593,7 @@ def WinToUnix (Astr: str) -> str:
             # print ('INFO: Only LINUX or WINDOWS')
             Lstr = Astr
     #endmatch
+    return Lstr
 #endfunction
 
 #-------------------------------------------------
@@ -1679,7 +1680,7 @@ def CreateLoggerCONFIG (AFileNameCONFIG: str, ALogerName: str,
     CONFIG = {}
     global LoggerTOOLS
 
-    print ('CONFIG:ADirectoryLOG:',ADirectoryLOG)
+    #print ('CONFIG:ADirectoryLOG:',ADirectoryLOG)
 
     LPath = LUFile.ExtractFileDir(__file__)
     LFileNameCONFIG = os.path.join (LPath, AFileNameCONFIG)
@@ -1740,7 +1741,9 @@ def CreateLoggerCONFIG (AFileNameCONFIG: str, ALogerName: str,
 
     if len(CONFIG) > 0:
         #-------------------------------------------------------------------
-        LFileNameCONFIG = os.path.join (LUos.GetCurrentDir (), CDefaultFileLogCONFIG)
+        # LFileNameCONFIG = os.path.join (LUos.GetCurrentDir (), CDefaultFileLogCONFIG)
+        LFileNameCONFIG = os.path.join (LUFile.GetTempDir(), CDefaultFileLogCONFIG)
+
         LUDict.SaveDictSTR (CONFIG, LFileNameCONFIG)
         #-------------------------------------------------------------------
         # читаем конфигурацию из словаря
@@ -1892,7 +1895,7 @@ def CreateLoggerFILEINI (AFileNameINI: str, ALogerName: str,
         # print('LFileNameLOG:',LFileNameLOG)
         if AFileNameLOGjson == '':
             LSectionName_02 = 'handler_FILE_02'
-            LOptionValue_02 = LINIFile.GetOption(LSectionName_02, LOptionName)
+            LOptionValue_02 = LINIFile.GetOption(LSectionName_02, LOptionName, '')
             # print ('LOptionValue_02:',LOptionValue_02)
             LFileNameLOGjson = LUFile.ExtractFileName (LOptionValue_02.split([',', '('])[0])
         else:
@@ -2001,12 +2004,14 @@ def CreateTFileMemoLog () -> TFileMemoLog:
 #-------------------------------------------------
 # Инициализация системы logging
 #-------------------------------------------------
-# GLoggerFILEINI = None
-# GLoggerCONFIG = None
-# LoggerTOOLS = None
-# LoggerAPPS = None
-# LoggerTLogger = None
-# FileMemoLog = None
+STATLogging = True
+
+GLoggerFILEINI = logging.Logger
+GLoggerCONFIG = logging.Logger
+LoggerTOOLS = logging.Logger
+LoggerAPPS = logging.Logger
+LoggerTLogger = TLogger
+FileMemoLog = TFileMemoLog
 
 def STARTLogging (T: TTypeSETUPLOG, ADirectoryLOG: str, AFileNameLOG: str, AFileNameLOGjson: str) -> None:
     """STARTLogging"""
@@ -2028,6 +2033,7 @@ def STARTLogging (T: TTypeSETUPLOG, ADirectoryLOG: str, AFileNameLOG: str, AFile
 
     AddLevelName ()
 
+    LT = T
     if LUos.GOSInfo.system == 'Windows':
         LT = T
     #endif
@@ -2127,19 +2133,22 @@ def STOPLogging () -> None:
     """STOPLogging"""
 #beginfunction
     global STATLogging
-    global LoggerTOOLS
+    # global LoggerTOOLS
     STATLogging = False
     # LoggerTOOLS.disabled = True# Выключить систему logging для логгирования
 #endfunction
 
+
+
+
 #-------------------------------------------------
-# LoggerTOOLS_AddLevel
+# LoggerAdd
 #-------------------------------------------------
-def LoggerTOOLS_AddLevel (ALevel, Astr):
+def LoggerAdd (ALogger, ALevel, Astr):
 #beginfunction
     if STATLogging:
         try:
-            LoggerTOOLS.log(ALevel, Astr)
+            ALogger.log(ALevel, Astr)
         except:
             ...
         #endtry
@@ -2148,105 +2157,121 @@ def LoggerTOOLS_AddLevel (ALevel, Astr):
     #endif
 #endfunction
 
-#-------------------------------------------------
-# LoggerTOOLS_AddDebug
-#-------------------------------------------------
-def LoggerTOOLS_AddDebug (Astr):
-#beginfunction
-    if STATLogging:
-        try:
-            LoggerTOOLS.debug(Astr)
-        except:
-            ...
-        #endtry
-    else:
-        print("INFO: система не включена для записи логов")
-    #endif
-#endfunction
-
-#-------------------------------------------------
-# LoggerTOOLS_AddError
-#-------------------------------------------------
-def LoggerTOOLS_AddError (Astr):
-#beginfunction
-    if STATLogging:
-        try:
-            LoggerTOOLS.error(Astr)
-        except:
-            ...
-        #endtry
-    else:
-        print("INFO: система не включена для записи логов")
-    #endif
-#endfunction
-
-#-------------------------------------------------
-# LoggerAPPS_AddLevel
-#-------------------------------------------------
-#LULog.LoggerAPPS.log
-def LoggerAPPS_AddLevel (ALevel, Astr):
-#beginfunction
-    if STATLogging:
-        try:
-            LoggerAPPS.log(ALevel, Astr)
-        except:
-            ...
-        #endtry
-    else:
-        print("INFO: система не включена для записи логов")
-    #endif
-#endfunction
-
-#-------------------------------------------------
-# LoggerAPPS_AddInfo
-#-------------------------------------------------
-#LULog.LoggerAPPS.info
-def LoggerAPPS_AddInfo (Astr):
-#beginfunction
-    if STATLogging:
-        try:
-            LoggerAPPS.info(Astr)
-        except:
-            ...
-        #endtry
-    else:
-        print("INFO: система не включена для записи логов")
-    #endif
-#endfunction
-
-#-------------------------------------------------
-# LoggerAPPS_AddError
-#-------------------------------------------------
-#LULog.LoggerAPPS.error
-def LoggerAPPS_AddError (Astr):
-#beginfunction
-    if STATLogging:
-        try:
-            LoggerAPPS.error(Astr)
-        except:
-            ...
-        #endtry
-    else:
-        print("INFO: система не включена для записи логов")
-    #endif
-#endfunction
-
-#-------------------------------------------------
-# LoggerAPPS_AddDebug
-#-------------------------------------------------
-#LULog.LoggerAPPS.debug
-def LoggerAPPS_AddDebug (Astr):
-#beginfunction
-    if STATLogging:
-        try:
-            LoggerAPPS.debug(Astr)
-        except:
-            ...
-        #endtry
-    else:
-        print("INFO: система не включена для записи логов")
-    #endif
-#endfunction
+# #-------------------------------------------------
+# # LoggerTOOLS_AddLevel
+# #-------------------------------------------------
+# def LoggerTOOLS_AddLevel (ALevel, Astr):
+# #beginfunction
+#     if STATLogging:
+#         try:
+#             LoggerTOOLS.log(ALevel, Astr)
+#         except:
+#             ...
+#         #endtry
+#     else:
+#         print("INFO: система не включена для записи логов")
+#     #endif
+# #endfunction
+#
+# #-------------------------------------------------
+# # LoggerTOOLS_AddDebug
+# #-------------------------------------------------
+# def LoggerTOOLS_AddDebug (Astr):
+# #beginfunction
+#     if STATLogging:
+#         try:
+#             LoggerTOOLS.debug(Astr)
+#         except:
+#             ...
+#         #endtry
+#     else:
+#         print("INFO: система не включена для записи логов")
+#     #endif
+# #endfunction
+#
+# #-------------------------------------------------
+# # LoggerTOOLS_AddError
+# #-------------------------------------------------
+# def LoggerTOOLS_AddError (Astr):
+# #beginfunction
+#     if STATLogging:
+#         try:
+#             LoggerTOOLS.error(Astr)
+#         except:
+#             ...
+#         #endtry
+#     else:
+#         print("INFO: система не включена для записи логов")
+#     #endif
+# #endfunction
+#
+# #-------------------------------------------------
+# # LoggerAPPS_AddLevel
+# #-------------------------------------------------
+# #LULog.LoggerAPPS.log
+# def LoggerAPPS_AddLevel (ALevel, Astr):
+# #beginfunction
+#     if STATLogging:
+#         try:
+#             LoggerAPPS.log(ALevel, Astr)
+#         except:
+#             ...
+#         #endtry
+#     else:
+#         print("INFO: система не включена для записи логов")
+#     #endif
+# #endfunction
+#
+# #-------------------------------------------------
+# # LoggerAPPS_AddInfo
+# #-------------------------------------------------
+# #LULog.LoggerAPPS.info
+# def LoggerAPPS_AddInfo (Astr):
+# #beginfunction
+#     if STATLogging:
+#         try:
+#             LoggerAPPS.info(Astr)
+#         except:
+#             ...
+#         #endtry
+#     else:
+#         print("INFO: система не включена для записи логов")
+#     #endif
+# #endfunction
+#
+# #-------------------------------------------------
+# # LoggerAPPS_AddError
+# #-------------------------------------------------
+# #LULog.LoggerAPPS.error
+# def LoggerAPPS_AddError (Astr):
+# #beginfunction
+#     if STATLogging:
+#         try:
+#             LoggerAPPS.error(Astr)
+#         except:
+#             ...
+#         #endtry
+#     else:
+#         print("INFO: система не включена для записи логов")
+#     #endif
+# #endfunction
+#
+# #-------------------------------------------------
+# # LoggerAPPS_AddDebug
+# #-------------------------------------------------
+# #LULog.LoggerAPPS.debug
+# def LoggerAPPS_AddDebug (Astr):
+# #beginfunction
+#     if STATLogging:
+#         try:
+#             LoggerAPPS.debug(Astr)
+#         except:
+#             ...
+#         #endtry
+#     else:
+#         print("INFO: система не включена для записи логов")
+#     #endif
+# #endfunction
 
 #-------------------------------------------------
 # main

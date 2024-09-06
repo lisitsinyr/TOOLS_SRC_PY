@@ -18,6 +18,7 @@ __annotations__ = """
 # БИБЛИОТЕКИ python
 #------------------------------------------
 import threading
+import logging
 
 #------------------------------------------
 # БИБЛИОТЕКИ сторонние
@@ -95,7 +96,7 @@ class TTimer (threading.Timer):
         """run - Запуск таймера"""
     #beginfunction
         s = 'run - Запуск таймера...'
-        LULog.LoggerTOOLS_AddDebug (s)
+        LULog.LoggerAdd (LULog.LoggerTOOLS, logging.DEBUG, s)
         # super ().run()
 
         # self.Function()

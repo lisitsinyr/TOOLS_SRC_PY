@@ -22,7 +22,6 @@ import sys
 import enum
 import ctypes
 import datetime
-import logging
 
 """
 Кроссплатформенные функции:
@@ -177,7 +176,7 @@ class TFolders (object):
         """ destructor """
     #beginfunction
         LClassName = self.__class__.__name__
-        s = '{} уничтожен'.format(LClassName)
+        # s = '{} уничтожен'.format(LClassName)
         # LULog.LoggerTOOLS_AddLevel (LULog.DEBUGTEXT, s)
         #print (s)
     #endfunction
@@ -420,7 +419,7 @@ class TOSInfo (object):
         """ destructor """
     #beginfunction
         LClassName = self.__class__.__name__
-        s = '{} уничтожен'.format(LClassName)
+        # s = '{} уничтожен'.format(LClassName)
         #LUConst.LULogger.log (LULog.DEBUGTEXT, s)
     #endfunction
 

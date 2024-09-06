@@ -18,6 +18,7 @@ __annotations__ = """
 # БИБЛИОТЕКИ python
 #------------------------------------------
 import threading
+import logging
 
 #------------------------------------------
 # БИБЛИОТЕКИ сторонние
@@ -124,7 +125,7 @@ class TThread (threading.Thread):
         """run - Запуск потока"""
     #beginfunction
         s = 'run - Запуск потока...'
-        LULog.LoggerTOOLS_AddDebug (s)
+        LULog.LoggerAdd (LULog.LoggerTOOLS, logging.DEBUG, s)
         super ().run()
         while not self.__FStopThread:
             # s = 'Выполнение потока...'
@@ -140,7 +141,7 @@ class TThread (threading.Thread):
         """StartThread"""
     #beginfunction
         s = 'StartThread...'
-        LULog.LoggerTOOLS_AddDebug (s)
+        LULog.LoggerAdd (LULog.LoggerTOOLS, logging.DEBUG, s)
         self.__FStopThread = False
         self.run()
     #endfunction
@@ -151,7 +152,7 @@ class TThread (threading.Thread):
         """StopThread"""
     #beginfunction
         s = 'StopThread...'
-        LULog.LoggerTOOLS_AddDebug (s)
+        LULog.LoggerAdd (LULog.LoggerTOOLS, logging.DEBUG, s)
         self.__FStopThread = True
     #endfunction
 
