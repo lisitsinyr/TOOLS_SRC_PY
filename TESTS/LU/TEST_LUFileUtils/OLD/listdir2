@@ -1,0 +1,95 @@
+﻿# -------------------------------------------------------------------------------
+# WorkFile (AFile_path)
+# -------------------------------------------------------------------------------
+def WorkFile (AFile_path):
+    global Shablon
+#beginfunction
+    LFileNameSource: str = AFile_path
+    LFullFileName: str = LFileNameSource
+    LFileName: str = os.path.basename(LFullFileName)
+    LFileSize: int = os.path.getsize(LFullFileName)
+    LFileDir: str = os.path.dirname(LFullFileName)
+
+    #-------------------------------------------------------------------------
+    #LFileTimeSource = GetFileTime(LFileNameSource)
+    #-------------------------------------------------------------------------
+    #file modification
+    LFileTimeSource = os.path.getmtime(LFileNameSource)
+    #convert timestamp into DateTime object
+    LFileTimeSource = datetime.datetime.fromtimestamp(LFileTimeSource)
+    #file creation
+    LFileTimeSource = os.path.getctime(LFileNameSource)
+    #convert creation timestamp into DateTime object
+    LFileTimeSource = datetime.datetime.fromtimestamp(LFileTimeSource)
+
+    #-------------------------------------------------------------------------
+    if Shablon == Shablon1:
+        #Shablon1: str = '{FullFileDir} {FileName} {FileTime} {FileSize}'
+        message = Shablon.format(FullFileDir=LFullFileName,FileName=LFileName,FileTime=LFileTimeSource,FileSize=LFileSize)
+        print (message)
+    #endif
+    if Shablon == Shablon2:
+        #Shablon2: str = '{FileName={FullFileName}|{FullFileDir}|{FileDir}'
+        message = Shablon.format(FileName=LFileName,FullFileName=LFullFileName,FullFileDir=LFullFileName,FileDir=LFileDir)
+        print (message)
+    #endif
+#endfunction
+
+#-------------------------------------------------------------------------------
+# ListFile (ASourcePath, AMask)
+#-------------------------------------------------------------------------------
+def ListFile (ASourcePath, AMask):
+#beginfunction
+    # LFiles: LListFiles [str] = os.listdir (ASourcePath)
+    LFiles = os.listdir (ASourcePath)
+    for LFile in LFiles:
+        LSourcePath = os.sep.join ([ASourcePath, LFile])
+        if os.path.isfile (LSourcePath):
+            #Это файл
+            #Lstats = os.stat (LSourcePath)
+            WorkFile (LSourcePath)
+        #endif
+    #endfor
+#endfunction
+
+#-------------------------------------------------------------------------------
+# ListDir (ASourcePath, AMask)
+#-------------------------------------------------------------------------------
+def ListDir (ASourcePath, AMask):
+    global Level
+#beginfunction
+    Level = Level + 1
+    #------------------------------------------------------------
+    # Dir
+    #------------------------------------------------------------
+    #DirName = GetFileName(ASourcePath)
+    LDirName = os.path.basename (ASourcePath)
+    LFullDirName = ASourcePath
+    if Level > NLevel:
+        if Shablon == Shablon0:
+            message = Shablon.format (DirName=LDirName)
+            print (1,message)
+        #endif
+    #endif
+    # LFiles: LListFiles [str] = os.listdir (ASourcePath)
+    LFiles = os.listdir (ASourcePath)
+    for LFile in LFiles:
+        LSourcePath = os.sep.join ([ASourcePath, LFile])
+        #Lstats = os.stat (LSourcePath)
+        if os.path.isdir (LSourcePath):
+            #Это каталог
+            ListFile (LSourcePath, AMask)
+            #WorkFile(LSourcePath)
+            #--------------------------------------------------------
+            #if Shablon == Shablon0:
+            #    message = Shablon.format(DirName=LFile)
+            #    print(2,message)
+            ##endif
+            #--------------------------------------------------------
+            if NLevel >= Level:
+                ListDir (LSourcePath, AMask)
+            #endif
+        #endif
+    #endfor
+    Level = Level - 1
+#endfunction
