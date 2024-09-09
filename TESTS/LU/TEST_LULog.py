@@ -181,13 +181,13 @@ def TEST_PrintLogger (ALogger):
     # LULog.LoggerTOOLS.level = logging.INFO
     # LULog.LoggerTOOLS.setLevel (logging.INFO)
 
-    # LULog.LoggerTOOLS.debug ('DEBUG.')
-    # LULog.LoggerTOOLS.info ('INFO.')
-    # LULog.LoggerTOOLS.warning ('WARNING.')
-    # LULog.LoggerTOOLS.error ('ERROR.')
-    # LULog.LoggerTOOLS.critical ('CRITICAL.')
-    # LULog.LoggerTOOLS.fatal ('FATAL.')
-    # LULog.LoggerTOOLS.log (logging.WARNING, 'WARNING.')
+    LULog.LoggerTOOLS.debug ('DEBUG.')
+    LULog.LoggerTOOLS.info ('INFO.')
+    LULog.LoggerTOOLS.warning ('WARNING.')
+    LULog.LoggerTOOLS.error ('ERROR.')
+    LULog.LoggerTOOLS.critical ('CRITICAL.')
+    LULog.LoggerTOOLS.fatal ('FATAL.')
+    LULog.LoggerTOOLS.log (logging.WARNING, 'WARNING.')
 
     
     s = f'Logger={ALogger}'
