@@ -109,7 +109,7 @@ def main ():
     """main"""
 #beginfunction
     LULog.STARTLogging (LULog.TTypeSETUPLOG.tslINI,
-                        r'D:\PROJECTS_LYR\CHECK_LIST\DESKTOP\02_Python\PROJECTS_PY\TESTS_PY\LOG',
+                        r'D:\PROJECTS_LYR\CHECK_LIST\DESKTOP\Python\PROJECTS_PY\TESTS_PY\LOG',
                         'LOGGING_FILEINI.log','LOGGING_FILEINI_json.log')
 
     # print ('DEBUG: function ',sys._getframe (0).f_code.co_name, '...')

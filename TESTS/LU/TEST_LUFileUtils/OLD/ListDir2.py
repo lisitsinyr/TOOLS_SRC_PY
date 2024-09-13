@@ -132,7 +132,7 @@ def TEST_01 ():
     global GLog
     global GShablon
 
-    GDir = 'D:\\PROJECTS_LYR\\CHECK_LIST\\DESKTOP\\02_Python\\PROJECTS_PY\\TESTS_PY'
+    GDir = 'D:\\PROJECTS_LYR\\CHECK_LIST\\DESKTOP\\Python\\PROJECTS_PY\\TESTS_PY'
     # GDir = os.getcwd()
     match Format:
         case 1:
