@@ -142,7 +142,7 @@ def main ():
     # Lparser.add_argument ('-PMask', type = str, nargs = '?', default = '', dest = 'PMask', help = 'PMask')
     Largs = Lparser.parse_args ()
     
-    GDir = 'D:\\PROJECTS_LYR\\CHECK_LIST\\05_DESKTOP\\02_Python\\PROJECTS_PY\\TESTS_PY'
+    GDir = 'D:\\PROJECTS_LYR\\CHECK_LIST\\DESKTOP\\02_Python\\PROJECTS_PY\\TESTS_PY'
     GDir = 'D:\\GAMES\\WORK\\AV'
     GDir = Largs.PDir
     LULog.LoggerAPPS_AddLevel (LULog.TEXT, f'PDir = {GDir}')

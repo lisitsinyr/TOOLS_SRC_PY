@@ -45,8 +45,8 @@ def TEST_LUFile ():
 
 def TEST_DirectoryExists ():
     """TEST_DirectoryExists"""
-    LPath1 = 'D:\\PROJECTS_LYR\\CHECK_LIST\\05_DESKTOP\\02_Python\\PROJECTS_PY\\TESTS_PY\\TEST_LU'
-    LPath2 = 'D:\\PROJECTS_LYR\\CHECK_LIST\\05_DESKTOP\\02_Python\\PROJECTS_PY\\TESTS_PY\\TEST_L'
+    LPath1 = 'D:\\PROJECTS_LYR\\CHECK_LIST\\DESKTOP\\02_Python\\PROJECTS_PY\\TESTS_PY\\TEST_LU'
+    LPath2 = 'D:\\PROJECTS_LYR\\CHECK_LIST\\DESKTOP\\02_Python\\PROJECTS_PY\\TESTS_PY\\TEST_L'
     LPath3 = 'D:\\WORK'
 #beginfunction
     PrintInfoObject('---------TEST_DirectoryExists----------')
@@ -67,7 +67,7 @@ def TEST_DirectoryExists ():
 
 def TEST_ForceDirectories ():
     """TEST_ForceDirectories"""
-    LPath1 = r"D:\PROJECTS_LYR\CHECK_LIST\05_DESKTOP\02_Python\PROJECTS_PY\TESTS_PY\WORK"
+    LPath1 = r"D:\PROJECTS_LYR\CHECK_LIST\DESKTOP\02_Python\PROJECTS_PY\TESTS_PY\WORK"
 #beginfunction
     PrintInfoObject('---------TEST_ForceDirectories----------')
     PrintInfoObject(TEST_ForceDirectories)
@@ -81,7 +81,7 @@ def TEST_ForceDirectories ():
 
 def TEST_GetFileDateTime ():
     """TEST_GetFileDateTime"""
-    LFileName = r"D:\PROJECTS_LYR\CHECK_LIST\05_DESKTOP\02_Python\PROJECTS_PY\TESTS_PY\WORK\LOGGING_FILEINI.log"
+    LFileName = r"D:\PROJECTS_LYR\CHECK_LIST\DESKTOP\02_Python\PROJECTS_PY\TESTS_PY\WORK\LOGGING_FILEINI.log"
 #beginfunction
     PrintInfoObject('---------TEST_GetFileDateTime----------')
     PrintInfoObject(TEST_GetFileDateTime)
@@ -100,7 +100,7 @@ def TEST_GetFileDateTime ():
 def TEST_WriteStrToFile ():
     """TEST_WriteStrToFile"""
     LStr = 'Тестовая строка'
-    LFileName = r"D:\PROJECTS_LYR\CHECK_LIST\05_DESKTOP\02_Python\PROJECTS_PY\TESTS_PY\WORK\TEST.txt"
+    LFileName = r"D:\PROJECTS_LYR\CHECK_LIST\DESKTOP\02_Python\PROJECTS_PY\TESTS_PY\WORK\TEST.txt"
 #beginfunction
     PrintInfoObject('---------TEST_WriteStrToFile----------')
     PrintInfoObject(TEST_WriteStrToFile)
@@ -161,7 +161,7 @@ def TEST_GetFileEncoding ():
     PrintInfoObject(TEST_GetFileEncoding)
 
 
-    LFileName = r"D:\PROJECTS_LYR\CHECK_LIST\05_DESKTOP\02_Python\PROJECTS_PY\TESTS_PY\WORK\FAKE\FakeFile_1_1.txt"
+    LFileName = r"D:\PROJECTS_LYR\CHECK_LIST\DESKTOP\02_Python\PROJECTS_PY\TESTS_PY\WORK\FAKE\FakeFile_1_1.txt"
 
     LEncoding = LUFile.GetFileEncoding (LFileName)
     if LEncoding == '':
@@ -178,8 +178,8 @@ def TEST_IncludeTrailingBackslash ():
     PrintInfoObject('---------TEST_IncludeTrailingBackslash----------')
     PrintInfoObject(TEST_IncludeTrailingBackslash)
 
-    LPath1 = 'D:\\PROJECTS_LYR\\CHECK_LIST\\05_DESKTOP\\02_Python\\PROJECTS_PY\\TESTS_PY\\TEST_LU\\'
-    LPath2 = 'D:\\PROJECTS_LYR\\CHECK_LIST\\05_DESKTOP\\02_Python\\PROJECTS_PY\\TESTS_PY\\TEST_LU'
+    LPath1 = 'D:\\PROJECTS_LYR\\CHECK_LIST\\DESKTOP\\02_Python\\PROJECTS_PY\\TESTS_PY\\TEST_LU\\'
+    LPath2 = 'D:\\PROJECTS_LYR\\CHECK_LIST\\DESKTOP\\02_Python\\PROJECTS_PY\\TESTS_PY\\TEST_LU'
     LPath11 = LUFile.IncludeTrailingBackslash(LPath1)
     LPath21 = LUFile.IncludeTrailingBackslash(LPath2)
     s = f'LPath11: {LPath11}'
@@ -194,8 +194,8 @@ def TEST_GetDirNameYYMMDD ():
     PrintInfoObject('---------TEST_GetDirNameYYMMDD----------')
     PrintInfoObject(TEST_GetDirNameYYMMDD)
 
-    LPath1 = 'D:\\PROJECTS_LYR\\CHECK_LIST\\05_DESKTOP\\02_Python\\PROJECTS_PY\\TESTS_PY\\TEST_LU\\'
-    LPath2 = 'D:\\PROJECTS_LYR\\CHECK_LIST\\05_DESKTOP\\02_Python\\PROJECTS_PY\\TESTS_PY\\TEST_LU'
+    LPath1 = 'D:\\PROJECTS_LYR\\CHECK_LIST\\DESKTOP\\02_Python\\PROJECTS_PY\\TESTS_PY\\TEST_LU\\'
+    LPath2 = 'D:\\PROJECTS_LYR\\CHECK_LIST\\DESKTOP\\02_Python\\PROJECTS_PY\\TESTS_PY\\TEST_LU'
     LNow: datetime = datetime.datetime.now()
     LDirNameYYMMDD1: str = LUFile.GetDirNameYYMMDD(LPath1, LNow)
     LDirNameYYMMDD2: str = LUFile.GetDirNameYYMMDD(LPath2, LNow)
@@ -211,8 +211,8 @@ def TEST_GetDirNameYYMM ():
     PrintInfoObject('---------TEST_GetDirNameYYMM----------')
     PrintInfoObject(TEST_GetDirNameYYMM)
 
-    LPath1 = r'D:\PROJECTS_LYR\CHECK_LIST\05_DESKTOP\02_Python\PROJECTS_PY\TESTS_PY\TEST_LU'
-    LPath2 = r'D:\PROJECTS_LYR\CHECK_LIST\05_DESKTOP\02_Python\PROJECTS_PY\TESTS_PY\TEST_LU'
+    LPath1 = r'D:\PROJECTS_LYR\CHECK_LIST\DESKTOP\02_Python\PROJECTS_PY\TESTS_PY\TEST_LU'
+    LPath2 = r'D:\PROJECTS_LYR\CHECK_LIST\DESKTOP\02_Python\PROJECTS_PY\TESTS_PY\TEST_LU'
     LNow: datetime = datetime.datetime.now()
     LDirNameYYMM1: str = LUFile.GetDirNameYYMM(LPath1, LNow)
     LDirNameYYMM2: str = LUFile.GetDirNameYYMM(LPath2, LNow)
@@ -239,7 +239,7 @@ def TEST_SearchFile ():
     PrintInfoObject('---------TEST_SearchFile----------')
     PrintInfoObject(TEST_SearchFile)
 
-    LDir = r'D:\PROJECTS_LYR\CHECK_LIST\05_DESKTOP\02_Python\PROJECTS_PY\TESTS_PY\WORK\FAKE'
+    LDir = r'D:\PROJECTS_LYR\CHECK_LIST\DESKTOP\02_Python\PROJECTS_PY\TESTS_PY\WORK\FAKE'
     LFileName = 'FakeFile_1_2.txt'
     LMask = r'.*.txt'
     LMask = ''
@@ -273,7 +273,7 @@ def TEST_SearchFileDirs ():
     # s = LUParserREG.GREGParser.GetKeyReg (LUParserREG.THKEYConst.cHKLM, LSectionName, LKeyName)
     # print(s)
 
-    LpathVar = [r'D:\PROJECTS_LYR\CHECK_LIST\05_DESKTOP\02_Python\PROJECTS_PY\TESTS_PY\WORK\FAKE']
+    LpathVar = [r'D:\PROJECTS_LYR\CHECK_LIST\DESKTOP\02_Python\PROJECTS_PY\TESTS_PY\WORK\FAKE']
 
     LFileName = 'jdeprscan.exe'
     LFileName = ''
@@ -298,7 +298,7 @@ def TEST_SearchINIFile ():
     PrintInfoObject('---------TEST_SearchINIFile----------')
     PrintInfoObject(TEST_SearchINIFile)
 
-    LpathVar = [r'D:\PROJECTS_LYR\CHECK_LIST\05_DESKTOP\02_Python\PROJECTS_PY']
+    LpathVar = [r'D:\PROJECTS_LYR\CHECK_LIST\DESKTOP\02_Python\PROJECTS_PY']
     LFileName = 'TEST_LU.ini'
     LMask = ''
     LExt = '.ini'
@@ -316,7 +316,7 @@ def TEST_SearchEXEFile ():
     PrintInfoObject('---------TEST_SearchEXEFile----------')
     PrintInfoObject(TEST_SearchEXEFile)
 
-    LpathVar = [r'D:\PROJECTS_LYR\CHECK_LIST\05_DESKTOP\02_Python\PROJECTS_PY']
+    LpathVar = [r'D:\PROJECTS_LYR\CHECK_LIST\DESKTOP\02_Python\PROJECTS_PY']
     LFileName = 'python.exe'
     LMask = ''
     LExt = '.exe'
@@ -332,7 +332,7 @@ def TEST_SearchEXEFile ():
 def main ():
 #beginfunction
     LULog.STARTLogging (LULog.TTypeSETUPLOG.tslINI,
-                        r'D:\PROJECTS_LYR\CHECK_LIST\05_DESKTOP\02_Python\PROJECTS_PY\TESTS_PY\LOG',
+                        r'D:\PROJECTS_LYR\CHECK_LIST\DESKTOP\02_Python\PROJECTS_PY\TESTS_PY\LOG',
                         'LOGGING_FILEINI.log','LOGGING_FILEINI_json.log')
 
     # TEST_DirectoryExists ()

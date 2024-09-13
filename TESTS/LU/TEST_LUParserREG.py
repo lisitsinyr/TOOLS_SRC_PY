@@ -121,7 +121,7 @@ def TEST_TREGParser ():
     LValue_TEST_EXPAND_SZ = 'TEST_EXPAND_SZ'
     LOption_TEST_DWORD = 'TEST_DWORD'
     LValue_TEST_DWORD = 1000
-    LFileName = r'D:\PROJECTS_LYR\CHECK_LIST\05_DESKTOP\02_Python\PROJECTS_PY\TESTS_PY\TEST_LU\SOFTWARE'
+    LFileName = r'D:\PROJECTS_LYR\CHECK_LIST\DESKTOP\02_Python\PROJECTS_PY\TESTS_PY\TEST_LU\SOFTWARE'
     #------------------------------
     # CreateKeyReg
     #------------------------------
@@ -157,7 +157,7 @@ def TEST_Regedit ():
     PrintInfoObject('---------TEST_Regedit----------')
     PrintInfoObject(TEST_Regedit)
 
-    LFileName = r'D:\PROJECTS_LYR\CHECK_LIST\05_DESKTOP\02_Python\PROJECTS_PY\TESTS_PY\TEST_LU\SOFTWARE.reg'
+    LFileName = r'D:\PROJECTS_LYR\CHECK_LIST\DESKTOP\02_Python\PROJECTS_PY\TESTS_PY\TEST_LU\SOFTWARE.reg'
     LFileName = 'SOFTWARE.reg'
     LSection = r'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders'
     LUParserREG.SaveRegToFile_regedit (LFileName, LUParserREG.THKEYConst.cHKCU, LSection)

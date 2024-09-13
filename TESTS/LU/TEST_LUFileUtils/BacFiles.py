@@ -75,7 +75,7 @@ if platform.system() == 'Windows':
 def main ():
 #beginfunction
     LULog.STARTLogging (LULog.TTypeSETUPLOG.tslINI,
-                        r'D:\PROJECTS_LYR\CHECK_LIST\05_DESKTOP\02_Python\PROJECTS_PY\TESTS_PY\LOG',
+                        r'D:\PROJECTS_LYR\CHECK_LIST\DESKTOP\02_Python\PROJECTS_PY\TESTS_PY\LOG',
                         'LOGGING_FILEINI.log','LOGGING_FILEINI_json.log')
 
     # print ('DEBUG: function ',sys._getframe (0).f_code.co_name, '...')
@@ -114,7 +114,7 @@ def main ():
     LULog.LoggerAPPS_AddLevel (LULog.TEXT, f'PMask = {GMask}')
     #----------------------------------------------------------------
 
-    GDir = 'D:\\PROJECTS_LYR\\CHECK_LIST\\05_DESKTOP\\02_Python\\PROJECTS_PY\\TESTS_PY\\TEST_LU\\TEST_LUFileUtils'
+    GDir = 'D:\\PROJECTS_LYR\\CHECK_LIST\\DESKTOP\\02_Python\\PROJECTS_PY\\TESTS_PY\\TEST_LU\\TEST_LUFileUtils'
     GDir = 'G:\\WORK\\TEST_QT6_PY'
     LULog.LoggerAPPS_AddLevel (LULog.TEXT, f'PDir = {GDir}')
     GDirDest = 'D:\\WORK'

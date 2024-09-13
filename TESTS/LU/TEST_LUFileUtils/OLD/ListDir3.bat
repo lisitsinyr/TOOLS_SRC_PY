@@ -7,7 +7,7 @@ chcp 1251>NUL
 setlocal enabledelayedexpansion
 
 :begin
-    set SCRIPTS_DIR=D:\PROJECTS_LYR\CHECK_LIST\03_SCRIPT\04_BAT\PROJECTS_BAT\TOOLS_BAT
+    set SCRIPTS_DIR=D:\PROJECTS_LYR\CHECK_LIST\SCRIPT\04_BAT\PROJECTS_BAT\TOOLS_BAT
     set LIB_BAT=%SCRIPTS_DIR%\LIB
 
     call :CurrentDir || exit /b 1

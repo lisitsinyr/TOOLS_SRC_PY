@@ -75,7 +75,7 @@ if platform.system() == 'Windows':
 def main ():
 #beginfunction
     LULog.STARTLogging (LULog.TTypeSETUPLOG.tslINI,
-                        r'D:\PROJECTS_LYR\CHECK_LIST\05_DESKTOP\02_Python\PROJECTS_PY\TESTS_PY\LOG',
+                        r'D:\PROJECTS_LYR\CHECK_LIST\DESKTOP\02_Python\PROJECTS_PY\TESTS_PY\LOG',
                         'LOGGING_FILEINI.log','LOGGING_FILEINI_json.log')
 
     # print ('DEBUG: function ',sys._getframe (0).f_code.co_name, '...')
@@ -114,11 +114,11 @@ def main ():
     LULog.LoggerAPPS_AddLevel (LULog.TEXT, f'PMask = {GMask}')
     #----------------------------------------------------------------
 
-    GDir = r'D:\WORK\08_SUBD\01_ORACLE\БИБЛИОТЕКИ'
-    GDir = r'D:\WORK\08_SUBD\01_ORACLE\PROJECTS\oracle-db-examples'
-    GDir = r'D:\WORK\08_SUBD'
+    GDir = r'D:\WORK\SUBD\01_ORACLE\БИБЛИОТЕКИ'
+    GDir = r'D:\WORK\SUBD\01_ORACLE\PROJECTS\oracle-db-examples'
+    GDir = r'D:\WORK\SUBD'
     LULog.LoggerAPPS_AddLevel (LULog.TEXT, f'PDir = {GDir}')
-    GDirDest = r'D:\WORK\SYNC\08_SUBD'
+    GDirDest = r'D:\WORK\SYNC\SUBD'
     LULog.LoggerAPPS_AddLevel (LULog.TEXT, f'PDirDest = {GDirDest}')
     GMask = '.*'
     LULog.LoggerAPPS_AddLevel (LULog.TEXT, f'PMask = {GMask}')

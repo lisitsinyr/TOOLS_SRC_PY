@@ -95,7 +95,7 @@ def TEST_01 ():
 def main ():
 #beginfunction
     LULog.STARTLogging (LULog.TTypeSETUPLOG.tslINI,
-                        r'D:\PROJECTS_LYR\CHECK_LIST\05_DESKTOP\02_Python\PROJECTS_PY\TESTS_PY\LOG',
+                        r'D:\PROJECTS_LYR\CHECK_LIST\DESKTOP\02_Python\PROJECTS_PY\TESTS_PY\LOG',
                         'LOGGING_FILEINI.log','LOGGING_FILEINI_json.log')
     TEST_01 ()
 #endfunction

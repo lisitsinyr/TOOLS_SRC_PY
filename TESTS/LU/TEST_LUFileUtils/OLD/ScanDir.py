@@ -151,7 +151,7 @@ def main ():
     # GDirDest = Largs.PDirDest
     # GMask = Largs.PMask
 
-    GDirSource = 'D:\\PROJECTS_LYR\\CHECK_LIST\\05_DESKTOP\\02_Python\\PROJECTS_PY\\TESTS_PY'
+    GDirSource = 'D:\\PROJECTS_LYR\\CHECK_LIST\\DESKTOP\\02_Python\\PROJECTS_PY\\TESTS_PY'
     GDirDest = 'D:\\WORK\\TESTS_PY'
     GMask = '.*'
 

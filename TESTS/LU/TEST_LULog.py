@@ -105,7 +105,7 @@ def TEST_Log_KIX ():
     LULog.LogAdd(LLog, LLogFile, LULog.TTypeLogString.tlsPROCESS, '---- Это процесс ------------')
     LULog.LogAdd(LLog, LLogFile, LULog.TTypeLogString.tlsTEXT, '---- "" Это tlsText ------------')
 
-    # LFileName = 'D:\\PROJECTS_LYR\\CHECK_LIST\\05_DESKTOP\\02_Python\\PROJECTS_PY\\TESTS_PY\\TEST_LU\\TEST_LUsys.py'
+    # LFileName = 'D:\\PROJECTS_LYR\\CHECK_LIST\\DESKTOP\\02_Python\\PROJECTS_PY\\TESTS_PY\\TEST_LU\\TEST_LUsys.py'
     LFileName = 'TEST_LUSupport.py'
     LFileName = 'TEST_LUsys.py'
     LULog.LogAdd(LLog, LLogFile, LULog.TTypeLogString.tlsINFO, LFileName)
