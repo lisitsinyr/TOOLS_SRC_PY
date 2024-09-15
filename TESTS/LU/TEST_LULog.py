@@ -26,7 +26,7 @@ import argparse
 #------------------------------------------
 
 #------------------------------------------
-# БИБЛИОТЕКА LU 
+# БИБЛИОТЕКА LU
 #------------------------------------------
 # import lyrpy.LULog as LULog
 
@@ -44,6 +44,7 @@ def TEST_LULog ():
     PrintInfoObject('---------TEST_LULog----------')
     PrintInfoObject(TEST_LULog)
     PrintInfoObject(LULog)
+
 #endfunction
 
 def TEST_GetLogFileName ():

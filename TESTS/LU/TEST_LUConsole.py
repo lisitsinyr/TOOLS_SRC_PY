@@ -38,7 +38,7 @@ import progress.bar
 #------------------------------------------
 # БИБЛИОТЕКА LU 
 #------------------------------------------
-import lyrpy.LULog as LULog
+import lyrpy.LULog as LULog1
 import lyrpy.LUConst as LUConst
 from lyrpy.LUDoc import *
 import lyrpy.LUConsole as LUConsole
@@ -54,7 +54,7 @@ def TEST_LUConsole ():
     PrintInfoObject(TEST_LUConsole)
     PrintInfoObject(LUConsole)
 
-    LULog.LoggerAdd (LULog.LoggerAPPS, logging.INFO, sys.stdout.encoding)
+    LULog1.LoggerAdd (LULog.LoggerAPPS, logging.INFO, sys.stdout.encoding)
     LULog.LoggerAdd (LULog.LoggerAPPS, logging.INFO, sys.stdout.name)
     LULog.LoggerAdd (LULog.LoggerAPPS, logging.INFO, sys.stdout.isatty())
     LULog.LoggerAdd (LULog.LoggerAPPS, logging.INFO, sys.stdout.mode)
