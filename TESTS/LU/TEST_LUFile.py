@@ -110,7 +110,7 @@ def TEST_WriteStrToFile ():
 
 def TEST_Extract_Get ():
     """ TEST_Extract_Get """
-    LFileName0 = "1\\1\\1.txt"
+    LFileName0 = r"TEST_LUFile\TEST_LUFile.txt"
 #beginfunction
     PrintInfoObject('---------TEST_Extract_Get----------')
     PrintInfoObject(TEST_Extract_Get)

@@ -28,8 +28,7 @@ import argparse
 #------------------------------------------
 # БИБЛИОТЕКА LU
 #------------------------------------------
-# import lyrpy.LULog as LULog
-
+import lyrpy.LULog as LULog
 from lyrpy.LUDoc import *
 import lyrpy.LUos as LUos
 import lyrpy.LUFile as LUFile
