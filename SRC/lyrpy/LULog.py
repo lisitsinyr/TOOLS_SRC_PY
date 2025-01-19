@@ -2150,6 +2150,7 @@ def LoggerAdd (ALogger, ALevel, Astr):
         try:
             ALogger.log(ALevel, Astr)
         except:
+            print("ERROR:")
             ...
         #endtry
     else:

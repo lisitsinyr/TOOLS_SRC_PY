@@ -17,7 +17,7 @@ __annotations__ = """
 #------------------------------------------
 # БИБЛИОТЕКИ python
 #------------------------------------------
-import sys
+#import sys
 
 #------------------------------------------
 # БИБЛИОТЕКИ сторонние
@@ -38,7 +38,8 @@ def PrintInfoObject (AObject):
     # print (inspect.stack () [0] [3], '...')
     # print (traceback.extract_stack () [-1].name, '...')
     s = f'{AObject}'
-    LULog.LoggerAdd (LULog.LoggerTOOLS, LULog.DEBUGTEXT, s)
+    #LULog.LoggerAdd (LULog.LoggerTOOLS, LULog.DEBUGTEXT, s)
+    print (s)
 #endfunction
 
 #---------------------------------------------------------------
@@ -47,6 +48,7 @@ def PrintInfoObject (AObject):
 def main ():
 #beginfunction
     print('main LUDoc.py...')
+    ...
 #endfunction
 
 #------------------------------------------
