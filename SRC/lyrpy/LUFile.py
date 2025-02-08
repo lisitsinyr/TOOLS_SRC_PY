@@ -1002,15 +1002,19 @@ def CheckFileNameMask (AFileName: str, AMask: str) -> bool:
         # LMask = '^[\\S ]*.py$'              # *.py - все символы включая пробелы
         # LMask = '^[a-zA-Z0-9]*.py$'         # *.py - только латинские буквы и цифры
         LMask = AMask
-
+        # print (LMask, LFileName)
         #-------------------------------------------------------------------------------
         # regex = re.compile (LMask)
         # Lresult = regex.match(LFileName)
         #-------------------------------------------------------------------------------
         # эквивалентно
         #-------------------------------------------------------------------------------
-        Lresult = re.match (LMask, LFileName)
-        # Lresult = re.search (LMask, LFileName)
+        try:
+            Lresult = re.match (LMask, LFileName)
+            # Lresult = re.search (LMask, LFileName)
+        except Exception as e:
+            Lresult = False
+        #endtry
         #-------------------------------------------------------------------------------
     else:
         Lresult = False

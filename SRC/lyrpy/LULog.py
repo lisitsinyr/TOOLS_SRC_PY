@@ -1875,8 +1875,8 @@ def CreateLoggerFILEINI (AFileNameINI: str, ALogerName: str,
         #endif
     #endif
 
-    print ('LPathINI:',LPathINI)
-    print ('LFileNameINI:',LFileNameINI)
+    #print ('LPathINI:',LPathINI)
+    #print ('LFileNameINI:',LFileNameINI)
 
     if not SetEditINI:
         pass
