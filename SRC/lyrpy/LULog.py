@@ -26,6 +26,7 @@ import logging
 import logging.config
 import yaml
 import json
+import shutil
 
 import inspect
 import traceback
@@ -614,7 +615,7 @@ class TFileMemoLog (object):
                 self.AddLog (TTypeLogString.tlsERROR, AFileName)
                 s = f'AddLogFile: Неправильная кодировка журнала!'
                 LoggerTOOLS.error (s)
-
+            #endtry
         #endif
     #endfunction
 #endclass
@@ -907,6 +908,7 @@ class TFormatter(logging.Formatter):
                 else:
                     LFmt = _s
                 return LFmt
+            #endif
         else:
             return AFmt
         #endif
@@ -1786,7 +1788,7 @@ def CreateLoggerYAML (AFileNameYAML: str, ALogerName: str, ADirectoryLOG: str, A
 
     if AFileNameLOG == '':
         LOptionValue_01 = CONFIG_YAML ['handlers'] ['FILE_01'] ['filename']
-        print ('LOptionValue_01:', LOptionValue_01)
+        # print ('LOptionValue_01:', LOptionValue_01)
         LFileNameLOG = LUFile.ExtractFileName (LOptionValue_01)
     else:
         LFileNameLOG = LUFile.ExtractFileName (AFileNameLOG)
@@ -1795,7 +1797,7 @@ def CreateLoggerYAML (AFileNameYAML: str, ALogerName: str, ADirectoryLOG: str, A
 
     if AFileNameLOGjson == '':
         LOptionValue_02 = CONFIG_YAML ['handlers'] ['FILE_02'] ['filename']
-        print ('LOptionValue_02:', LOptionValue_02)
+        # print ('LOptionValue_02:', LOptionValue_02)
         LFileNameLOGjson = LUFile.ExtractFileName (LOptionValue_02)
     else:
         LFileNameLOGjson = LUFile.ExtractFileName (AFileNameLOGjson)
@@ -1851,7 +1853,6 @@ def CreateLoggerFILEINI (AFileNameINI: str, ALogerName: str,
 
     # читаем конфигурацию из файла INI
     LFileNameINI = LUFile.ExpandFileName (AFileNameINI)
-    # print ('LFileNameINI:', LFileNameINI)
 
     if LUFile.FileExists (LFileNameINI):
         # существует файл, который можно редактировать
@@ -1859,28 +1860,34 @@ def CreateLoggerFILEINI (AFileNameINI: str, ALogerName: str,
         LPathINI = LUFile.ExtractFileDir (LFileNameINI)
         LFileNameINI = os.path.join (LPathINI, LUFile.ExtractFileName (AFileNameINI))
     else:
-        # print ('LFileNameINI:', LFileNameINI)
-        LPathINI = LUos.GetCurrentDir ()
-        LFileNameINI = os.path.join (LPathINI, LUFile.ExtractFileName (AFileNameINI))
-        # print ('LFileNameINI:', LFileNameINI)
-        if LUFile.FileExists (LFileNameINI):
-            # существует файл в текущем каталоге, который можно редактировать
-            SetEditINI = True
-        else:
-            # берем имя файла из проекта, если оно есть
-            LPathINI = LUFile.ExtractFileDir (__file__)
-            # print(LPathINI)
+        SetEditINI = False
+        if not ALogerName == 'console':
+            LPathINI = LUos.GetCurrentDir ()
             LFileNameINI = os.path.join (LPathINI, LUFile.ExtractFileName (AFileNameINI))
-            SetEditINI = False
+            if LUFile.FileExists (LFileNameINI):
+                # существует файл в текущем каталоге, который можно редактировать
+                SetEditINI = True
+            else:
+                # берем имя файла из проекта, если оно есть
+                SetEditINI = True
+                LPathINI = LUFile.ExtractFileDir (__file__)
+                LFileNameINIorig = os.path.join (LPathINI, CDefaultFileLogINI)
+                # Копирование файла
+                shutil.copy (LFileNameINIorig, LFileNameINI)
+            #endif
+        else:
+            LPathINI = LUFile.ExtractFileDir (__file__)
+            LFileNameINI = os.path.join (LPathINI, LUFile.ExtractFileName (AFileNameINI))
         #endif
     #endif
 
-    #print ('LPathINI:',LPathINI)
-    #print ('LFileNameINI:',LFileNameINI)
+    print ('LFileNameINI:', LFileNameINI)
 
     if not SetEditINI:
+        print ('ALogerName:',ALogerName)
         pass
     else:
+        # print ('AFileNameLOG:', AFileNameLOG)
         LINIFile = LUParserINI.TINIFile ()
         LINIFile.FileNameINI = LFileNameINI
         LOptionName = 'args'
@@ -1888,16 +1895,21 @@ def CreateLoggerFILEINI (AFileNameINI: str, ALogerName: str,
             LSectionName_01 = 'handler_FILE_01'
             LOptionValue_01 = LINIFile.GetOption(LSectionName_01, LOptionName, '')
             # print ('LOptionValue_01:',LOptionValue_01)
-            LFileNameLOG = LUFile.ExtractFileName (LOptionValue_01.split([',', '('])[0])
+            LFileNameLOG = LOptionValue_01.split("'")[1]
+            # print('LFileNameLOG:',LFileNameLOG)
+            LFileNameLOG = LUFile.ExtractFileName (LFileNameLOG)
         else:
             LFileNameLOG = LUFile.ExtractFileName (AFileNameLOG)
         #endif
         # print('LFileNameLOG:',LFileNameLOG)
+        # print('AFileNameLOGjson:',AFileNameLOGjson)
         if AFileNameLOGjson == '':
             LSectionName_02 = 'handler_FILE_02'
             LOptionValue_02 = LINIFile.GetOption(LSectionName_02, LOptionName, '')
             # print ('LOptionValue_02:',LOptionValue_02)
-            LFileNameLOGjson = LUFile.ExtractFileName (LOptionValue_02.split([',', '('])[0])
+            LFileNameLOGjson = LOptionValue_02.split("'")[1]
+            # print('LFileNameLOGjson:',LFileNameLOGjson)
+            LFileNameLOGjson = LUFile.ExtractFileName (LFileNameLOGjson)
         else:
             LFileNameLOGjson = LUFile.ExtractFileName (AFileNameLOGjson)
         #endif
@@ -1945,7 +1957,7 @@ def CreateLoggerFILEINI (AFileNameINI: str, ALogerName: str,
 
     os.chdir (LDirectoryLOG)
 
-    # print(LFileNameINI)
+    print(LFileNameINI)
     logging.config.fileConfig (LFileNameINI, disable_existing_loggers=True,
                                encoding=LUFile.cDefaultEncoding)
     # logging.config.fileConfig (LFileNameINI, disable_existing_loggers=True, encoding='cp1251')
@@ -2013,7 +2025,7 @@ LoggerAPPS = logging.Logger
 LoggerTLogger = TLogger
 FileMemoLog = TFileMemoLog
 
-def STARTLogging (T: TTypeSETUPLOG, ADirectoryLOG: str, AFileNameLOG: str, AFileNameLOGjson: str) -> None:
+def STARTLogging (T: TTypeSETUPLOG, ALogerName, ADirectoryLOG: str, AFileNameLOG: str, AFileNameLOGjson: str) -> None:
     """STARTLogging"""
 #beginfunction
     global STATLogging
@@ -2031,6 +2043,8 @@ def STARTLogging (T: TTypeSETUPLOG, ADirectoryLOG: str, AFileNameLOG: str, AFile
     global LoggerTLogger
     global FileMemoLog
 
+    LLogerNames = ['root','log01','log01', 'console']
+
     AddLevelName ()
 
     LT = T
@@ -2041,22 +2055,31 @@ def STARTLogging (T: TTypeSETUPLOG, ADirectoryLOG: str, AFileNameLOG: str, AFile
         LT = TTypeSETUPLOG.tslCONFIG
     #endif
 
-    match LT:
-        case TTypeSETUPLOG.tslCONFIG:
-            GLoggerCONFIG = CreateLoggerCONFIG (CDefaultFileLogCONFIG, 'root',
+    if ALogerName in LLogerNames:
+        match LT:
+            case TTypeSETUPLOG.tslCONFIG:
+                GLoggerCONFIG = CreateLoggerCONFIG (CDefaultFileLogCONFIG, ALogerName,
+                                                    ADirectoryLOG, AFileNameLOG,
+                                                    AFileNameLOGjson)
+            case TTypeSETUPLOG.tslYAML:
+                GLoggerYAML = CreateLoggerYAML (CDefaultFileLogYAML, ALogerName,
                                                 ADirectoryLOG, AFileNameLOG,
                                                 AFileNameLOGjson)
-        case TTypeSETUPLOG.tslYAML:
-            GLoggerYAML = CreateLoggerYAML (CDefaultFileLogYAML, 'root',
-                                            ADirectoryLOG, AFileNameLOG,
-                                            AFileNameLOGjson)
-        case TTypeSETUPLOG.tslINI:
-            GLoggerFILEINI = CreateLoggerFILEINI (CDefaultFileLogINI, 'root',
-                                                  ADirectoryLOG, AFileNameLOG,
-                                                  AFileNameLOGjson)
-        case _:
-            ...
-    #endmatch
+            case TTypeSETUPLOG.tslINI:
+                if ALogerName == 'console' or LUConst.GAPPName is None:
+                    LFileLogINI = CDefaultFileLogINI
+                else:
+                    LFileLogINI = LUConst.GAPPName+'.ini'
+                #endif
+                GLoggerFILEINI = CreateLoggerFILEINI (LFileLogINI, ALogerName,
+                                                      ADirectoryLOG, AFileNameLOG,
+                                                      AFileNameLOGjson)
+            case _:
+                ...
+        #endmatch
+    else:
+        exit()
+    #endif
 
     #-------------------------------------------------
     # GLoggerBASIC = CreateLoggerBASIC (logging.DEBUG, 'LOG\\' + CDefaultFileLogFILEBASIC, 'root')
