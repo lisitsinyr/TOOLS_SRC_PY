@@ -231,8 +231,10 @@ def TEST_progress ():
 #------------------------------------------
 def main ():
 #beginfunction
-    LULog.STARTLogging (LULog.TTypeSETUPLOG.tslINI,'LOG_INIT',
-                        'LOGGING_FILEINI.log','LOGGING_FILEINI_json.log')
+    LULog.STARTLogging (LULog.TTypeSETUPLOG.tslINI,
+                        'console', LUConst.GDirectoryLOG, LUConst.GFileNameLOG,
+                        LUConst.GFileNameLOGjson)
+    LULog.LoggerTOOLS.level = logging.INFO
 
     print (f'ISTerminal={LUSupport.IsTerminal ()}')
 
