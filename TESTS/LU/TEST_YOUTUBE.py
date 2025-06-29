@@ -19,6 +19,7 @@ import os
 import threading
 import time
 import datetime
+import logging
 
 #------------------------------------------
 # БИБЛИОТЕКИ сторонние
@@ -31,6 +32,7 @@ import pytube.exceptions
 #------------------------------------------
 # БИБЛИОТЕКИ LU
 #------------------------------------------
+import lyrpy.LUConst as LUConst
 from lyrpy.LUDoc import *
 import lyrpy.LUos as LUos
 import lyrpy.LUObjectsYT as LUObjectsYT
@@ -385,8 +387,14 @@ def TEST_YOUTUBE_06_YouTubeObject_Thread_Cliboard ():
 #------------------------------------------
 def Main ():
 #beginfunction
-    LULog.STARTLogging (LULog.TTypeSETUPLOG.tslINI,'LOG_INIT',
-                        'LOGGING_FILEINI.log','LOGGING_FILEINI_json.log')
+    # LULog.STARTLogging (LULog.TTypeSETUPLOG.tslINI,'LOG_INIT',
+    #                     'LOGGING_FILEINI.log','LOGGING_FILEINI_json.log')
+
+
+    LULog.STARTLogging (LULog.TTypeSETUPLOG.tslINI, 'console',
+                        LUConst.GDirectoryLOG, LUConst.GFileNameLOG,
+                        LUConst.GFileNameLOGjson)
+    LULog.LoggerTOOLS.level = logging.INFO
 
     TEST_YOUTUBE_Proc ()
 
