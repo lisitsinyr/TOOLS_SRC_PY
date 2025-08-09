@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lyrpy"
-version = "0.1.0"
+version = "2025.0.1"
 description = ""
 authors = ["lisitsinyr <lisitsinyr@gmail.com>"]
 readme = "README.md"
