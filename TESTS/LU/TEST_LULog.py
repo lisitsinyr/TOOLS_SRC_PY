@@ -569,8 +569,8 @@ def __GetINI ():
 def main ():
 #beginfunction
     LULog.STARTLogging (LULog.TTypeSETUPLOG.tslINI,
-                        r'D:\PROJECTS_LYR\LOGS',
-                        'TEST_LULog.log',
+                        'console',
+                        r'D:\PROJECTS_LYR\LOGS','TEST_LULog.log',
                         'TEST_LULog_json.log')
 
     TEST_LULog ()
