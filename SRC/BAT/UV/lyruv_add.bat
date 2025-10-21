@@ -67,38 +67,59 @@ rem ----------------------------------------------------------------------------
 
     set /a LOG_FILE_ADD=0
 
+    call :CurrentDir || exit /b 1
+    rem echo CurrentDir:!CurrentDir!
+
     rem -------------------------------------
     rem OPTION
     rem -------------------------------------
     set OPTION=
 
-    set O4_Name=O4
-    set O4_Caption=python
-    set O4_Default=3.14
-    set O4=!O4_Default!
-    set PN_CAPTION=!O4_Caption!
-    call :Read_P O4 || exit /b 1
-    echo O4:!O4!
-    if defined O4 (
-        set OPTION=!OPTION!--python !O4!
+    if not defined O1 (
+        set O1_Name=O1
+        set O1_Caption=project_dir
+        set O1_Default=!CurrentDir!
+        set O1=!O1_Default!
+        set PN_CAPTION=!O1_Caption!
+        call :Read_P O1 || exit /b 1
+    )
+    echo O1:!O1!
+    if defined O1 (
+        rem set OPTION=!OPTION! !O1!
     ) else (
-        echo INFO: O4 [O4_Name:!O4_Name! O4_Caption:!O4_Caption!] not defined ...
+        echo INFO: O1 [O1_Name:!O1_Name! O1_Caption:!O1_Caption!] not defined ...
     )
 
-    call :CurrentDir || exit /b 1
-    set O5_Name=O5
-    set O5_Caption=project_dir
-    set O5_Default=!CurrentDir!
-    set O5=!O5_Default!
-    set PN_CAPTION=!O5_Caption!
-    rem call :Read_P O5 !O5! || exit /b 1
-    call :Read_P O5 || exit /b 1
-    echo O5:!O5!
-    if defined O5 (
-        rem set OPTION=!OPTION! !O5!
-        set project_dir=!O5!
+    if not defined O2 (
+        set O2_Name=O2
+        set O2_Caption=packeges[A B C] requests
+        set O2_Default=
+        set O2=!O3_Default!
+        set PN_CAPTION=!O2_Caption!
+        call :Read_P O2 || exit /b 1
+    )
+    echo O2:!O2!
+    if defined O2 (
+        set OPTION=!OPTION! !O2!
     ) else (
-        echo INFO: O5 [O5_Name:!O5_Name! O5_Caption:!O5_Caption!] not defined ...
+        echo INFO: O2 [O2_Name:!O2_Name! O2_Caption:!O2_Caption!] not defined ...
+    )
+
+    if not defined O2 (
+        if not defined O3 (
+            set O3_Name=O3
+            set O3_Caption=requirements.txt
+            set O3_Default=
+            set O3=!O3_Default!
+            set PN_CAPTION=!O3_Caption!
+            call :Read_P O3 || exit /b 1
+        )
+        echo O3:!O3!
+        if defined O3 (
+            set OPTION=!OPTION!-r requirements.txt
+        ) else (
+            echo INFO: O3 [O3_Name:!O3_Name! O3_Caption:!O3_Caption!] not defined ...
+        )
     )
 
     echo OPTION:!OPTION!
@@ -107,12 +128,15 @@ rem ----------------------------------------------------------------------------
     rem ARGS
     rem -------------------------------------
     set ARGS=
-    set A1_Name=script
-    set A1_Caption=script
-    set A1_Default=
-    set A1=!A1_Default!
-    set PN_CAPTION=!A1_Caption!
-    rem call :Read_P A1 !A1! || exit /b 1
+
+    rem if not defined A1 (
+    rem     set A1_Name=A1
+    rem     set A1_Caption=
+    rem     set A1_Default=
+    rem     set A1=!A1_Default!
+    rem     set PN_CAPTION=!A1_Caption!
+    rem     call :Read_P A1 !A1! || exit /b 1
+    rem )
     rem echo A1:!A1!
     rem if defined A1 (
     rem     set ARGS=!ARGS! "!A1!"
@@ -121,33 +145,47 @@ rem ----------------------------------------------------------------------------
     rem     set OK=
     rem     exit /b 1
     rem )
+    
     rem echo ARGS:!ARGS!
 
-    if defined O5 (
-        if exist !O5!\ (
-            rem # For old timers who don't learn new tricks
-            rem uv venv path/to/.venv       Create a virtual environment at path/to/.venv
-            rem uv pip                      pip's interface with uv's speed
-
-            rem uv venv [project_dir\.venv]
-            rem uv venv --python 3.14 [project_dir\.venv]
-
-            rem cd !05!
-            rem set APP=uv venv !OPTION!
-
-            if exist !O5!\.venv (
-                set APP=uv venv !OPTION! --clear !O5!\.venv
-            ) else (
-                set APP=uv venv !OPTION! !O5!\.venv
-            )
+    rem -------------------------------------------------------------------
+    rem project_dir - 
+    rem -------------------------------------------------------------------
+    set project_dir=!O1!
+    echo project_dir:!project_dir!
+    if defined project_dir (
+        if not exist !project_dir!\ (
+            echo ERROR: Dir !project_dir! not exist ...
+            exit /b 1
         )
-    
-    ) else (
-        set APP=uv venv !OPTION!
+        cd /D !project_dir!
     )
 
-    echo APP:!APP!
-    start !APP!
+    if not exist .venv\ (
+        echo ERROR: Dir !project_dir!\.venv not exist ...
+        exit /b 1
+    ) else (
+        set APP=uv add --dev !OPTION!
+        echo APP:!APP!
+        start !APP!
+    )
+    
+    rem uv.exe add <PACKAGES|--requirements <REQUIREMENTS>>
+
+
+    rem uv add requests             Add requests as a dependency
+    rem uv add A B C                Add A, B, and C as dependencies
+    rem uv add -r requirements.txt  Add dependencies from the file requirements.txt
+    rem uv add --dev pytest         Add pytest as a development dependency
+
+    rem uv remove requests          Remove requests as a dependency
+    rem uv remove A B C             Remove A, B, C, and their transitive dependencies
+    rem uv lock --upgrade           Upgrade the dependencies' versions
+
+
+    rem uv pip compile pyproject.toml --quiet --output-file requirements.txt
+    rem uv pip freeze > requirements.txt
+
 
     rem call :PressAnyKey || exit /b 1
     

@@ -72,51 +72,29 @@ rem ----------------------------------------------------------------------------
     rem -------------------------------------
     set OPTION=
 
-    set O1_Name=O1
-    set O1_Caption=VENV
-    set O1_Default=P313
-    set O1=!O1_Default!
-    set PN_CAPTION=!O1_Caption!
-    call :Read_P O1 !O1! || exit /b 1
+    if not defined O1 (
+        set O1_Name=O1
+        set O1_Caption=python version
+        set O1_Default=3.13.9
+        set O1=!O1_Default!
+        set PN_CAPTION=!O1_Caption!
+        rem call :Read_P O1 || exit /b 1
+    )
     echo O1:!O1!
     if defined O1 (
-       set OPTION=!OPTION! -!O1_Name! "!O1!"
+        set OPTION=!OPTION! "!O1!"
     ) else (
         echo INFO: O1 [O1_Name:!O1_Name! O1_Caption:!O1_Caption!] not defined ...
     )
-
-    echo OPTION:!OPTION!
-
-    rem -------------------------------------------------------------------
-    rem ENV - 
-    rem -------------------------------------------------------------------
-    set PY_ENVDIR=D:\PROJECTS_LYR\CHECK_LIST\DESKTOP\Python\VENV\P313
-    set PY_ENVDIR=D:\PROJECTS_LYR\CHECK_LIST\DESKTOP\Python\PROJECTS_PY\YOUTUBE_yt-dlp\.venv
-    echo !O1!
-    if exist !O1! (
-       set PY_ENVDIR=!O1!
-    ) else (
-        if !01!==P313 (
-            set PY_ENVDIR=D:\PROJECTS_LYR\CHECK_LIST\DESKTOP\Python\VENV\P313
-        ) else (
-            if !01!==P314 (
-                set PY_ENVDIR=D:\PROJECTS_LYR\CHECK_LIST\DESKTOP\Python\VENV\P314
-            )
-        )
-    )
-    echo PY_ENVDIR:!PY_ENVDIR!
-    if not exist !PY_ENVDIR! (
-        echo INFO: Dir !PY_ENVDIR! not exist ...
-        exit /b 1
-    )
+    rem echo OPTION:!OPTION!
 
     rem -------------------------------------
     rem ARGS
     rem -------------------------------------
     set ARGS=
-    set A1_Name=package_name
-    set A1_Caption=package_name
-    set A1_Default=%1
+    set A1_Name=script
+    set A1_Caption=script
+    set A1_Default=
     set A1=!A1_Default!
     set PN_CAPTION=!A1_Caption!
     rem call :Read_P A1 !A1! || exit /b 1
@@ -128,14 +106,25 @@ rem ----------------------------------------------------------------------------
     rem     set OK=
     rem     exit /b 1
     rem )
-
     rem echo ARGS:!ARGS!
 
-    call :PY_ENV_START || exit /b 1
+    rem call :UV_python_list !O1! || exit /b 1
 
-    uv sync
+    rem call :UV_python_install !O1! || exit /b 1
 
-    call :PY_ENV_STOP || exit /b 1
+    rem call :UV_python_uninstall !O1! || exit /b 1
+
+    rem call :UV_python_run !O1! || exit /b 1
+
+    rem         call :UV_python_upgrade !O1! || exit /b 1
+
+    call :UV_python_find !O1! || exit /b 1
+
+    call :UV_python_dir !O1! || exit /b 1
+
+    rem call :UV_python_ !O1! || exit /b 1
+
+    rem call :UV_python_pin !O1! || exit /b 1
 
     rem call :PressAnyKey || exit /b 1
     
@@ -144,8 +133,32 @@ rem ----------------------------------------------------------------------------
 rem =================================================
 
 rem =================================================
-rem ‘”Õ ÷»» LIB
+rem LIB
 rem =================================================
+
+rem =================================================
+rem LYRUV.bat
+rem =================================================
+:LYRUV
+%LIB_BAT%\LYRUV.bat %*
+:UV_python_list
+%LIB_BAT%\LYRUV.bat %*
+:UV_python_install
+%LIB_BAT%\LYRUV.bat %*
+:UV_python_uninstall
+%LIB_BAT%\LYRUV.bat %*
+:UV_python_run
+%LIB_BAT%\LYRUV.bat %*
+:UV_python_upgrade
+%LIB_BAT%\LYRUV.bat %*
+:UV_python_find
+%LIB_BAT%\LYRUV.bat %*
+:UV_python_dir
+%LIB_BAT%\LYRUV.bat %*
+:UV_python_
+%LIB_BAT%\LYRUV.bat %*
+:UV_python_pin
+%LIB_BAT%\LYRUV.bat %*
 
 rem =================================================
 rem LYRPY.bat

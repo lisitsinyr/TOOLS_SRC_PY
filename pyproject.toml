@@ -22,3 +22,16 @@ license-files = ["LICEN[CS]E*"]
 [project.urls]
 Homepage = "https://github.com/pypa/sampleproject"
 Issues = "https://github.com/pypa/sampleproject/issues"
+
+[tool.uv.workspace]
+members = [
+    ".",
+]
+
+[tool.uv.sources]
+lyrpy = { workspace = true }
+
+[dependency-groups]
+dev = [
+    "lyrpy",
+]
