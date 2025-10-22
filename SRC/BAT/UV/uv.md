@@ -17,8 +17,8 @@
 + uv add [--dev] -r requirements.txt  Add dependencies from the file requirements.txt
 uv add --dev pytest         Add pytest as a development dependency
 
-uv remove requests          Remove requests as a dependency
-uv remove A B C             Remove A, B, C, and their transitive dependencies
++ uv remove requests          Remove requests as a dependency
++ uv remove A B C             Remove A, B, C, and their transitive dependencies
 
 + uv lock --upgrade           Upgrade the dependencies' versions
 
