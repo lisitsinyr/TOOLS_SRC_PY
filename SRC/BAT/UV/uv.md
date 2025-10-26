@@ -90,7 +90,7 @@ uv run --with click myscript.py
 # For old timers who don't learn new tricks
 
 + uv venv path/to/.venv       Create a virtual environment at path/to/.venv
-uv pip                      pip's interface with uv's speed
++ uv pip                      pip's interface with uv's speed
 
 # Miscellaneous commands
 
