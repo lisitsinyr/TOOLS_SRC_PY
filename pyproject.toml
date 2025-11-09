@@ -18,6 +18,9 @@ classifiers = [
 ]
 license = "MIT"
 license-files = ["LICEN[CS]E*"]
+dependencies = [
+    "pip>=25.3",
+]
 
 [project.urls]
 Homepage = "https://github.com/pypa/sampleproject"
