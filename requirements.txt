@@ -1,6 +1,5 @@
 chardet==5.2.0
 colorama==0.4.6
-lyrpy==2025.0.2
 markdown-it-py==4.0.0
 mdurl==0.1.2
 psutil==7.1.3

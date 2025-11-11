@@ -13,7 +13,7 @@ setuptools.setup(
     # Имя дистрибутива пакета. Оно должно быть уникальным, поэтому добавление вашего имени пользователя в конце является обычным делом.
     name="lyrpy",
     # Номер версии вашего пакета. Обычно используется семантическое управление версиями.
-    version="2025.0.1",
+    version="2025.0.5",
     # Имя автора.
     author="lisitsinyr",
     # Его почта.
@@ -26,8 +26,37 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     # URL-адрес, представляющий домашнюю страницу проекта. Большинство проектов ссылаются на репозиторий.
     url="https://github.com/lisitsinyr/TOOLS_SRC_PY",
+
     # Находит все пакеты внутри проекта и объединяет их в дистрибутив.
     packages=setuptools.find_packages(),
+
+    include_package_data=True,  # Включить данные из MANIFEST.in
+
+    # package_data={
+    #     # Если include_package_data=True, это дополнительно
+    #     'lyrpy': ['*.json', '*.txt', 'data/*', 'templates/*.html', 'DOC/*.bat']
+    # },
+    # data_files=[
+    #     ('config', ['config/settings.cfg']),
+    #     ('docs', ['docs/README.md']),
+    # ]
+    package_data={
+        'lyrpy': [
+            '*.json',           # JSON файлы
+            '*.yaml',           # YAML файлы
+            'data/*.csv',       # CSV файлы
+            'templates/*.html', # HTML шаблоны
+            'static/css/*.css', # CSS файлы
+            'static/js/*.js',   # JavaScript файлы
+            'images/*.png',     # Изображения
+            'models/*.pkl',     # Модели ML
+        ]
+    },
+    # data_files=[
+    #     ('config', ['config/app.conf']),
+    #     ('docs', ['README.md', 'CHANGELOG.md']),
+    # ]
+
     # requirements или dependencies, которые будут установлены вместе с пакетом, когда пользователь установит его через pip.
     # install_requires=requirements,
     # Предоставляет pip некоторые метаданные о пакете. Также отображается на странице PyPi.
