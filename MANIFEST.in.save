@@ -1,0 +1,13 @@
+# include *.ini
+# include requirements.txt
+
+# include config/*
+# recursive-include docs/*
+# include docs/*
+# include tests/*
+
+# include lyrpy/logging*.*
+# recursive-include lyrpy/data *
+# recursive-include lyrpy/templates *
+# recursive-include lyrpy/static *
+

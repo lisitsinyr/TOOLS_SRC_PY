@@ -34,7 +34,7 @@ build-backend = "setuptools.build_meta" # If not defined, then legacy behavior c
 # https://packaging.python.org/specifications/core-metadata/#name
 name = "lyrpy"
 
-version ='2025.0.8'
+version ='2025.0.5'
 
 # This should be your name or the name of the organization who originally
 # authored the project, and a valid email address corresponding to the name
@@ -62,10 +62,10 @@ readme = "README.md"
 # 'Programming Language' classifiers in this file, 'pip install' will check this
 # and refuse to install the project if the version does not match. See
 # https://packaging.python.org/guides/distributing-packages-using-setuptools/#python-requires
-requires-python = ">=3.13"
+requires-python = ">=3.9"
 
-classifiers=[
-    "Programming Language :: Python :: 3.13",
+classifiers = [
+    "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
 ]
 
@@ -86,11 +86,12 @@ keywords = ["sample", "setuptools", "development"]
 # This should be your name or the names of the organization who currently
 # maintains the project, and a valid email address corresponding to the name
 # listed.
-# maintainers = [
-#   { name = "A. Great Maintainer", email = "maintainer@example.com" },
-# ]
+maintainers = [
+  { name = "A. Great Maintainer", email = "maintainer@example.com" },
+]
 
 # Classifiers help users find your project by categorizing it.
+#
 # For a list of valid classifiers, see https://pypi.org/classifiers/
 #classifiers = [
 #  # How mature is this project? Common values are
@@ -134,7 +135,6 @@ dependencies = [
 #
 #   $ pip install sampleproject[dev]
 #
-
 # Optional dependencies the project provides. These are commonly
 # referred to as "extras". For a more extensive definition see:
 # https://packaging.python.org/en/latest/specifications/dependency-specifiers/#extras
@@ -158,51 +158,58 @@ dev = [
 # issues, where the source is hosted, where to say thanks to the package
 # maintainers, and where to support the project financially. The key is
 # what's used to render the link text on PyPI.
-# [project.urls]
-# Issues = "https://github.com/pypa/sampleproject/issues"
-# Homepage = "https://github.com/pypa/sampleproject"
-# "Bug Reports" = "https://github.com/pypa/sampleproject/issues"
-# Funding = "https://donate.pypi.org"
-# "Say Thanks!" = "http://saythanks.io/to/example"
-# Source = "https://github.com/pypa/sampleproject/"
+[project.urls]
+Issues = "https://github.com/pypa/sampleproject/issues"
+Homepage = "https://github.com/pypa/sampleproject"
+"Bug Reports" = "https://github.com/pypa/sampleproject/issues"
+Funding = "https://donate.pypi.org"
+"Say Thanks!" = "http://saythanks.io/to/example"
+Source = "https://github.com/pypa/sampleproject/"
 
 # The following would provide a command line executable called `sample`
 # which executes the function `main` from this package when invoked.
 [project.scripts]
 sample = "sample:main"
-
 # If there are data files included in your packages that need to be
 # installed, specify them here.
 # package-data = { "sample" = ["*.dat"], "src" = ["src/*"]}
-# package-data = { "sample" = ["*.save"]}
 
-# This is configuration specific to the `setuptools` build backend.
-# If you are using a different build backend, you will need to change this.
 
-[tool.setuptools]
-# ...
-# By default, include-package-data is true in pyproject.toml,
-# so you do NOT have to specify this line.
-include-package-data = true
+
 
 # -----------------------------------------------------------------------
-# [tool.setuptools.packages]
-# find = {}  # Scan the project directory with the default parameters
+[tool.setuptools.packages]
+find = {}  # Scan the project directory with the default parameters
 # -----------------------------------------------------------------------
 # OR
 # -----------------------------------------------------------------------
-[tool.setuptools.packages.find]
+# [tool.setuptools.packages.find]
 # All the following settings are optional:
 # where = ["src"]  # ["."] by default
-include = ["lyrpy*"]  # ["*"] by default
-exclude = ["lyrpy.tests*"]  # empty by default
+# include = ["lyrpy*"]  # ["*"] by default
+# exclude = ["mypackage.tests*"]  # empty by default
 # namespaces = false  # true by default
 # -----------------------------------------------------------------------
 
-[tool.setuptools.package-data]
-# "*" = ["*.txt"]
-"*" = ["data/*", "templates/*", "static/*", "logging*.*"]
-# lyrpy = ["data/*", "templates/*", "static/*", "logging*.*"]
+# This is configuration specific to the `setuptools` build backend.
+# If you are using a different build backend, you will need to change this.
+[tool.setuptools]
+include-package-data = true
 
-[tool.setuptools.exclude-package-data]
-mypkg = [".gitattributes"]
+[tool.setuptools.package-data]
+# "lyrpy" = ["data/*", "templates/*.html", "static/**/*"]
+"lyrpy" = ["data/*", "templates/*", "static/*"]
+
+
+
+
+
+
+
+[tool.uv.workspace]
+members = [
+    ".",
+]
+
+[tool.uv.sources]
+lyrpy = { workspace = true }
