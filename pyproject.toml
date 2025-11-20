@@ -210,4 +210,5 @@ mypkg = [".gitattributes"]
 [tool.uv.workspace]
 members = [
     "src/BAT/UV",
+    "src/BAT/UV",
 ]
