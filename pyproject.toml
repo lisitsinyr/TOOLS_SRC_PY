@@ -206,3 +206,8 @@ exclude = ["lyrpy.tests*"]  # empty by default
 
 [tool.setuptools.exclude-package-data]
 mypkg = [".gitattributes"]
+
+[tool.uv.workspace]
+members = [
+    "src/BAT/UV",
+]
