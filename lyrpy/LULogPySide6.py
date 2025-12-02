@@ -1,4 +1,4 @@
-"""LULogLULogPySide6.py"""
+"""LULogPySide6.py"""
 # -*- coding: UTF-8 -*-
 __annotations__ ="""
  =======================================================
@@ -9,7 +9,7 @@ __annotations__ ="""
      LU_PY
      Python (LU)
  Module:
-     LULogPySide6.py
+     LULog.py
 
  =======================================================
 """
@@ -27,19 +27,21 @@ import logging.config
 import yaml
 import json
 import shutil
-import rich
+
+import inspect
+import traceback
 
 #------------------------------------------
 # БИБЛИОТЕКИ сторонние
 #------------------------------------------
-import pythonjsonlogger
-import pythonjsonlogger.jsonlogger
+import PySide6
 
-#------------------------------------------
-import PySide6.QtWidgets
+# import pythonjsonlogger
+import pythonjsonlogger.jsonlogger
 
 import rich
 import rich.console
+GConsoleRich = rich.console.Console ()
 
 #------------------------------------------
 # БИБЛИОТЕКА LU 
@@ -56,8 +58,6 @@ import lyrpy.LUSupport as LUSupport
 # ===========================================================================
 # CONST
 # ===========================================================================
-GConsoleRich = rich.console.Console ()
-
 """CONST"""
 ctlsNOTSET = ' '
 ctlsDEBUG = 'D'
@@ -660,8 +660,9 @@ class THandler(logging.Handler):
         # super ().__init__ ()
 
         self.__Fwidget = None
-        # self.__Fwidget = PySide6.QtWidgets.QPlainTextEdit (parent)
-        # self.__Fwidget.setReadOnly (True)
+        self.__Fwidget = PySide6.QtWidgets.QPlainTextEdit (parent)
+        self.__Fwidget.setReadOnly (True)
+
     #endfunction
 
     #--------------------------------------------------

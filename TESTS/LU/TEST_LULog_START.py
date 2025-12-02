@@ -20,6 +20,7 @@ import sys
 import time
 import datetime
 import platform
+import logging
 
 #------------------------------------------
 # БИБЛИОТЕКИ сторонние
@@ -29,30 +30,30 @@ import pandas
 #------------------------------------------
 # БИБЛИОТЕКИ LU
 #------------------------------------------
-import lyrpy.LUConsole as LUConsole
-import lyrpy.LUConst as LUConst
-import lyrpy.LUDateTime as LUDateTime
-import lyrpy.LUDecotators as LUDecotators
-import lyrpy.LUDict as LUDict
-import lyrpy.LUErrors as LUErrors
-import lyrpy.LUFile as LUFile
-import lyrpy.LUFileUtils as LUFileUtils
+# import lyrpy.LUConsole as LUConsole
+# import lyrpy.LUConst as LUConst
+# import lyrpy.LUDateTime as LUDateTime
+# import lyrpy.LUDecotators as LUDecotators
+# import lyrpy.LUDict as LUDict
+# import lyrpy.LUErrors as LUErrors
+# import lyrpy.LUFile as LUFile
+# import lyrpy.LUFileUtils as LUFileUtils
 import lyrpy.LULog as LULog
-import lyrpy.LUObjects as LUObjects
-import lyrpy.LUObjectsYT as LUObjectsYT
-import lyrpy.LUos as LUos
-import lyrpy.LUParserARG as LUParserARG
-import lyrpy.LUParserINI as LUParserINI
-import lyrpy.LUProc as LUProc
-import lyrpy.LUQThread as LUQThread
-import lyrpy.LUQTimer as LUQTimer
-import lyrpy.LUSheduler as LUSheduler
-import lyrpy.LUStrDecode as LUStrDecode
-import lyrpy.LUStrUtils as LUStrUtils
-import lyrpy.LUSupport as LUSupport
-import lyrpy.LUsys as LUsys
-import lyrpy.LUThread as LUThread
-import lyrpy.LUYouTube as LUYouTube
+# import lyrpy.LUObjects as LUObjects
+# import lyrpy.LUObjectsYT as LUObjectsYT
+# import lyrpy.LUos as LUos
+# import lyrpy.LUParserARG as LUParserARG
+# import lyrpy.LUParserINI as LUParserINI
+# import lyrpy.LUProc as LUProc
+# import lyrpy.LUQThread as LUQThread
+# import lyrpy.LUQTimer as LUQTimer
+# import lyrpy.LUSheduler as LUSheduler
+# import lyrpy.LUStrDecode as LUStrDecode
+# import lyrpy.LUStrUtils as LUStrUtils
+# import lyrpy.LUSupport as LUSupport
+# import lyrpy.LUsys as LUsys
+# import lyrpy.LUThread as LUThread
+# import lyrpy.LUYouTube as LUYouTube
 import lyrpy.LUDoc as LUDoc
 
 if platform.system() == 'Windows':
@@ -82,23 +83,31 @@ def TEST_01 ():
 #------------------------------------------
 def main ():
 #beginfunction
-    LULog.STARTLogging (LULog.TTypeSETUPLOG.tslINI,'LOG_INIT',
-                        'LOGGING_FILEINI.log','LOGGING_FILEINI_json.log')
-    LULog.LoggerAdd (LULog.LoggerTOOLS, LULog.TEXT, "Тест")
-    TEST_01 ()
+    LULog.STARTLogging (LULog.TTypeSETUPLOG.tslINI, 'console', '', '', '')
+    LULog.LoggerAPPS.level = logging.INFO
+    LULog.LoggerAPPS.level = 0
+
+    LULog.LoggerAdd (LULog.LoggerAPPS, LULog.TEXT, '!!!!!!!!!!!!')
+
     LULog.STOPLogging ()
 
-    LULog.STARTLogging (LULog.TTypeSETUPLOG.tslCONFIG, 'LOG_CONFIG',
-                        'LOGGING_FILECONFIG.log','LOGGING_FILECONFIG_json.log')
-    LULog.LoggerAdd (LULog.LoggerTOOLS, LULog.TEXT, "Тест")
-    TEST_01 ()
-    LULog.STOPLogging ()
-
-    LULog.STARTLogging (LULog.TTypeSETUPLOG.tslYAML, 'LOG_YAML',
-                        'LOGGING_FILEYAML.log','LOGGING_FILEYAML_json.log')
-    LULog.LoggerAdd (LULog.LoggerTOOLS, LULog.TEXT, "Тест")
-    TEST_01 ()
-    LULog.STOPLogging ()
+    # LULog.STARTLogging (LULog.TTypeSETUPLOG.tslINI,'console', 'LOG_INIT',
+    #                     'LOGGING_FILEINI.log','LOGGING_FILEINI_json.log')
+    # LULog.LoggerAdd (LULog.LoggerTOOLS, LULog.TEXT, "Тест")
+    # TEST_01 ()
+    # LULog.STOPLogging ()
+    #
+    # LULog.STARTLogging (LULog.TTypeSETUPLOG.tslCONFIG, 'console','LOG_CONFIG',
+    #                     'LOGGING_FILECONFIG.log','LOGGING_FILECONFIG_json.log')
+    # LULog.LoggerAdd (LULog.LoggerTOOLS, LULog.TEXT, "Тест")
+    # TEST_01 ()
+    # LULog.STOPLogging ()
+    #
+    # LULog.STARTLogging (LULog.TTypeSETUPLOG.tslYAML, 'console','LOG_YAML',
+    #                     'LOGGING_FILEYAML.log','LOGGING_FILEYAML_json.log')
+    # LULog.LoggerAdd (LULog.LoggerTOOLS, LULog.TEXT, "Тест")
+    # TEST_01 ()
+    # LULog.STOPLogging ()
 
 #endfunction
 

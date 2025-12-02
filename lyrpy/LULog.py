@@ -34,9 +34,11 @@ import traceback
 #------------------------------------------
 # БИБЛИОТЕКИ сторонние
 #------------------------------------------
-import PySide6
+# import PySide6
+
 # import pythonjsonlogger
 import pythonjsonlogger.jsonlogger
+
 import rich
 import rich.console
 GConsoleRich = rich.console.Console ()
@@ -658,8 +660,10 @@ class THandler(logging.Handler):
         # super ().__init__ ()
 
         self.__Fwidget = None
+
         # self.__Fwidget = PySide6.QtWidgets.QPlainTextEdit (parent)
         # self.__Fwidget.setReadOnly (True)
+
     #endfunction
 
     #--------------------------------------------------
@@ -705,27 +709,28 @@ class TStreamHandler(logging.StreamHandler):
 
         self.__FConsoleRich = rich.console.Console()
 
-        self.__FWidget:PySide6.QtWidgets.QPlainTextEdit = None
+        # self.__FWidget:PySide6.QtWidgets.QPlainTextEdit = None
+        
         # self.__Fwidget = PySide6.QtWidgets.QPlainTextEdit (parent)
         # self.__Fwidget = PySide6.QtWidgets.QPlainTextEdit ()
         # self.__Fwidget.setReadOnly (True)
 
     #endfunction
 
-    #--------------------------------------------------
-    # @property widget
-    #--------------------------------------------------
-    # getter
-    @property
-    def Widget (self):
-    #beginfunction
-        return self.__FWidget
-    #endfunction
-    @Widget.setter
-    def Widget (self, Value):
-    #beginfunction
-        self.__FWidget = Value
-    #endfunction
+    # #--------------------------------------------------
+    # # @property widget
+    # #--------------------------------------------------
+    # # getter
+    # @property
+    # def Widget (self):
+    # #beginfunction
+    #     return self.__FWidget
+    # #endfunction
+    # @Widget.setter
+    # def Widget (self, Value):
+    # #beginfunction
+    #     self.__FWidget = Value
+    # #endfunction
 
     #--------------------------------------------------
     # emit
@@ -735,16 +740,16 @@ class TStreamHandler(logging.StreamHandler):
     #beginfunction
         if type(self.formatter) is TFormatter:
             LFormatter: TFormatter = self.formatter
-            # widget
-            if not self.Widget is None:
-                b = LFormatter.FUseColor
-                LFormatter.FUseColor = False
-                msg = LFormatter.format (record)
-                self.Widget.appendPlainText (msg)
-                # self.widget.document().end()
-                self.Widget.verticalScrollBar().setValue (self.Widget.verticalScrollBar().maximum ())
-                LFormatter.FUseColor = b
-            #endif
+            # # widget
+            # if not self.Widget is None:
+            #     b = LFormatter.FUseColor
+            #     LFormatter.FUseColor = False
+            #     msg = LFormatter.format (record)
+            #     self.Widget.appendPlainText (msg)
+            #     # self.widget.document().end()
+            #     self.Widget.verticalScrollBar().setValue (self.Widget.verticalScrollBar().maximum ())
+            #     LFormatter.FUseColor = b
+            # #endif
 
             if LFormatter.FUseColor:
                 # self.emit(record)
@@ -2173,12 +2178,13 @@ def STOPLogging () -> None:
 def LoggerAdd (ALogger, ALevel, Astr):
 #beginfunction
     if STATLogging:
-        try:
-            ALogger.log(ALevel, Astr)
-        except:
-            print("ERROR:")
-            ...
-        #endtry
+        ALogger.log (ALevel, Astr)
+        # try:
+        #     ALogger.log(ALevel, Astr)
+        # except:
+        #     print("ERROR: LoggerAdd ...")
+        #     ...
+        # #endtry
     else:
         print("INFO: система не включена для записи логов")
     #endif

@@ -237,7 +237,10 @@ class TREGParser (object):
         except FileNotFoundError as ERROR:
             ...
         finally:
-            return not self.hkey is None
+            # return not self.hkey is None
+            pass
+
+        return not self.hkey is None
     #endfunction
 
     @staticmethod
@@ -255,7 +258,9 @@ class TREGParser (object):
         except FileNotFoundError as ERROR:
             ...
         finally:
-            return LResult
+            # return LResult
+            pass
+        return LResult
     #endfunction
 
     def OpenKeyReg (self, AHKEY: THKEYConst, ASection: str):
@@ -271,7 +276,9 @@ class TREGParser (object):
         except FileNotFoundError as ERROR:
             ...
         finally:
-            return self.hkey
+            # return self.hkey
+            pass
+        return self.hkey
     #endfunction
 
     @staticmethod

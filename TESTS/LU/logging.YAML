@@ -40,7 +40,7 @@
         "FILE_01": {
             "class": "logging.handlers.RotatingFileHandler",
             "formatter": "FORMAT_01",
-            "filename": "D:\\PROJECTS_LYR\\CHECK_LIST\\05_DESKTOP\\02_Python\\PROJECTS_PY\\TESTS_PY\\SRC\\TEST_LU\\LU\\LOG_YAML\\LOGGING_FILEYAML.log",
+            "filename": "D:\\PROJECTS_LYR\\CHECK_LIST\\DESKTOP\\Python\\PROJECTS_PY\\TOOLS_SRC_PY\\tests\\LU\\LOG_YAML\\LOGGING_FILEYAML.log",
             "level": "INFO",
             "maxBytes": 10000000,
             "backupCount": 5
@@ -48,7 +48,7 @@
         "FILE_02": {
             "class": "logging.handlers.RotatingFileHandler",
             "formatter": "FORMAT_json",
-            "filename": "D:\\PROJECTS_LYR\\CHECK_LIST\\05_DESKTOP\\02_Python\\PROJECTS_PY\\TESTS_PY\\SRC\\TEST_LU\\LU\\LOG_YAML\\LOGGING_FILEYAML_json.log",
+            "filename": "D:\\PROJECTS_LYR\\CHECK_LIST\\DESKTOP\\Python\\PROJECTS_PY\\TOOLS_SRC_PY\\tests\\LU\\LOG_YAML\\LOGGING_FILEYAML_json.log",
             "level": "INFO",
             "maxBytes": 10000000,
             "backupCount": 5
