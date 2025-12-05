@@ -371,7 +371,7 @@ def pause2 (ADelay:int=0, Aprompt:str=''):
     else:
         LPause = sys.stdin.read(1)
     #endif
-#endfunction 
+#endfunction
 
 #------------------------------------------------------
 # PasswdFromKbd
