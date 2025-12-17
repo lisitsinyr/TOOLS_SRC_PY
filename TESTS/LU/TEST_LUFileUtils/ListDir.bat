@@ -17,13 +17,13 @@ setlocal enabledelayedexpansion
     set Format=0
     rem set Format=
     call :Check_P Format %1 || exit /b 1
-    rem echo Format: %Format%    
+    rem echo ..P1.. Format: %Format%    
 
     rem set PN_CAPTION=Ввод значения
     set NLevel=1
     rem set P2=
     call :Check_P NLevel %2 || exit /b 1
-    rem echo P2: %P2%    
+    rem echo ..P1.. P2: %P2%    
 
     if "%Format%"=="" (
         echo ERROR: Параметр Format не задан...

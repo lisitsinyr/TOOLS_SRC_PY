@@ -16,12 +16,12 @@ setlocal enabledelayedexpansion
     rem set PDir_CAPTION=Ввод значения
     set PDir=%cd%
     call :Check_P Format %1 || exit /b 1
-    rem echo Format: %Format%    
+    rem echo ..P1.. Format: %Format%    
 
     rem set PMask_CAPTION=Ввод значения
     set PMask=*.*
     call :Check_P PMask %2 || exit /b 1
-    rem echo P2: %P2%    
+    rem echo ..P1.. P2: %P2%    
 
     if "%Format%"=="" (
         echo ERROR: Параметр Format не задан...
