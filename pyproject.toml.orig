@@ -1,0 +1,78 @@
+[build-system]
+
+# --------------------------------------------
+# setuptools
+# --------------------------------------------
+# A list of packages that are needed to build your package:
+requires = ["setuptools >= 77.0.3"] # REQUIRED if [build-system] table is used
+#requires = ["setuptools", "wheel"]
+# The name of the Python object that frontends will use to perform the build:
+build-backend = "setuptools.build_meta" # If not defined, then legacy behavior can happen.
+# --------------------------------------------
+
+[project]
+
+name = "lyrpy"
+
+version ='2025.12.09'
+
+authors = [
+  { name="lisitsinyr", email="lisitsinyr@gmail.com" },
+]
+
+description = "lyrpy"
+
+readme = "README.md"
+
+requires-python = ">=3.13"
+
+classifiers=[
+    "Programming Language :: Python :: 3.13",
+    "Operating System :: OS Independent",
+]
+
+license = "MIT"
+
+license-files = ["LICEN[CS]E*"]
+
+dependencies = [
+    "pip>=25.3",
+    "chardet>=5.2.0",
+    "colorama>=0.4.6",
+    "markdown-it-py>=4.0.0",
+    "mdurl>=0.1.2",
+    "psutil>=7.1.3",
+    "pyaes>=1.6.1",
+    "Pygments>=2.19.2",
+    "Pyrogram>=2.0.106",
+    "PySocks>=1.7.1",
+    "rich>=14.2.0",
+    "python-json-logger>=4.0.0",
+    "PyYAML>=6.0.3",
+    "build>=1.3.0",
+    "twine>=6.2.0",
+    "lyrpy>=2025.0.9",
+]
+
+[dependency-groups]
+
+dev = [
+    "lyrpy",
+]
+
+[tool.setuptools]
+
+include-package-data = true
+
+[tool.setuptools.packages.find]
+
+include = ["lyrpy*"]  # ["*"] by default
+exclude = ["lyrpy.tests*"]  # empty by default
+
+[tool.setuptools.package-data]
+
+"*" = ["data/*", "templates/*", "static/*", "logging*.*"]
+
+[tool.setuptools.exclude-package-data]
+
+mypkg = [".gitattributes"]
