@@ -216,7 +216,7 @@ wheels = [
 
 [[package]]
 name = "lyrpy"
-version = "2025.12.11"
+version = "2025.12.12"
 source = { editable = "." }
 dependencies = [
     { name = "build" },

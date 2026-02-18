@@ -1,6 +1,6 @@
 [project]
 name = "lyrpy"
-version = "2025.12.11"
+version = "2025.12.12"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.14"
@@ -753,7 +753,7 @@ upgrade-package = []
 
 # Default value: {}
 # Type: dict[str, str]
-data = {}
+#data = {}
 # Example usage:
 # data = { headers = "include/headers", scripts = "bin" }
 
