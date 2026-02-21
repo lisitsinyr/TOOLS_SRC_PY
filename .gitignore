@@ -73,7 +73,8 @@ LOG/
 OUT/
 EXE/
 WORK/
+TEST/
+TESTS/
 Writerside/
 .INFO/
 .ARCH/
-.TEST/
