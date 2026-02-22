@@ -1,0 +1,9 @@
+﻿[sendemail] 
+    smtpEncryption = tls
+    smtpServer = smtp.gmail.com
+    smtpUser = yourname@gmail.com
+    smtpUser = lisitsinyr@gmail.com
+    smtpServerPort = 465
+
+    # --from=<address> — указание адреса отправителя (если не указано в командной строке, используется значение параметра sendemail.from). 
+    # --reply-to=<address> — настройка адреса, куда должны отправляться ответы от получателей. 
