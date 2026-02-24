@@ -16,7 +16,7 @@ name = "lyrpy"
 # https://packaging.python.org/en/latest/specifications/version-specifiers/#
 # Default value: "[N!]N(.N)*[{a|b|rc}N][.postN][.devN]"
 # Type: str
-version = "2025.12.13"
+version = "2025.12.12"
 # Example usage:
 # version = "0.1.0"
 

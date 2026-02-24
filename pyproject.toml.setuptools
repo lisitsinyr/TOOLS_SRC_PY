@@ -16,7 +16,7 @@ name = "lyrpy"
 # https://packaging.python.org/en/latest/specifications/version-specifiers/#
 # Default value: "[N!]N(.N)*[{a|b|rc}N][.postN][.devN]"
 # Type: str
-version = "2025.12.13"
+version = "2025.12.12"
 # Example usage:
 # version = "0.1.0"
 
@@ -216,6 +216,71 @@ dependencies = [
 # Example usage:
 # dynamic = ["version",]
 
+[build-system]
+
+#### requires
+
+# Default value: []
+# Type: list[str]
+# Hatchling setuptools Flit PDM uv-build
+
+#### build-backend
+
+# Default value: ""
+# Type: str
+# Example usage:
+
+# --------------------------------------------
+# Hatchling
+# --------------------------------------------
+# A list of packages that are needed to build your package:
+requires = ["hatchling >= 1.26"]
+# The name of the Python object that frontends will use to perform the build:
+build-backend = "hatchling.build"
+
+# --------------------------------------------
+# Flit
+# --------------------------------------------
+# requires = ["flit_core >= 3.12.0, <4"]
+# build-backend = "flit_core.buildapi"
+
+# --------------------------------------------
+# PDM
+# --------------------------------------------
+# requires = ["pdm-backend >= 2.4.0"]
+# build-backend = "pdm.backend"
+
+# --------------------------------------------
+# mesonpy
+# --------------------------------------------
+# requires = [
+#    "meson-python>=0.13.1",
+#    "meson>=1.2.1,<2",
+#    "wheel",
+#    "Cython<4.0.0a0",  # Note: sync with setup.py, environment.yml and asv.conf.json
+#    # Force numpy higher than 2.0rc1, so that built wheels are compatible
+#    # with both numpy 1 and 2
+#    "numpy>=2.0.0rc1",
+#    "versioneer[toml]"
+#  ]
+# build-backend = "mesonpy"
+
+# --------------------------------------------
+# setuptools
+# --------------------------------------------
+# A list of packages that are needed to build your package:
+#requires = ["setuptools >= 77.0.3"] # REQUIRED if [build-system] table is used
+# The name of the Python object that frontends will use to perform the build:
+#build-backend = "setuptools.build_meta" # If not defined, then legacy behavior can happen.
+
+# --------------------------------------------
+# uv-build
+# --------------------------------------------
+# A list of packages that are needed to build your package:
+# requires = ["uv_build >= 0.9.21, <0.10.0"]
+# The name of the Python object that frontends will use to perform the build:
+# build-backend = "uv_build"
+
 #### ++optional-dependencies
 
 [project.optional-dependencies]
@@ -282,75 +347,25 @@ dependencies = [
 #     {include-group = "group-b"},
 #     {include-group = "group-c"},
 # ]
+[tool.setuptools]
+include-package-data = true
 
-[build-system]
+#package-dir = {"" = "src"}   # directory containing all the packages (e.g.  src/mypkg1, src/mypkg2)
 
-#### requires
+#[tool.setuptools.packages]
+#find = {}  # Scanning implicit namespaces is active by default
 
-# Default value: []
-# Type: list[str]
-# Hatchling setuptools Flit PDM uv-build
+[tool.setuptools.packages.find]
+#where = ["src"]  # list of folders that contain the packages (["."] by default)
+#include = ["my_package*"]  # package names should match these glob patterns (["*"] by default)
+#exclude = ["my_package.tests*"]  # exclude packages matching these glob patterns (empty by default)
+#namespaces = false  # to disable scanning PEP 420 namespaces (true by default)
 
-#### build-backend
+include = [ "lyrpy*", ]
+exclude = [ "lyrpy.tests*" ]
 
-# Default value: ""
-# Type: str
-# Example usage:
+[tool.setuptools.package-data]
+lyrpy = [ "data/*", "templates/*", "static/*", "logging*.*", ]
 
-# --------------------------------------------
-# Hatchling
-# --------------------------------------------
-# A list of packages that are needed to build your package:
-#requires = ["hatchling >= 1.26"]
-# The name of the Python object that frontends will use to perform the build:
-#build-backend = "hatchling.build"
-
-# --------------------------------------------
-# Flit
-# --------------------------------------------
-#requires = ["flit_core >= 3.12.0, <4"]
-#build-backend = "flit_core.buildapi"
-
-# --------------------------------------------
-# PDM
-# --------------------------------------------
-#requires = ["pdm-backend >= 2.4.0"]
-#build-backend = "pdm.backend"
-
-# --------------------------------------------
-# mesonpy
-# --------------------------------------------
-#requires = [
-#    "meson-python>=0.13.1",
-#    "meson>=1.2.1,<2",
-#    "wheel",
-#    "Cython<4.0.0a0",  # Note: sync with setup.py, environment.yml and asv.conf.json
-#    # Force numpy higher than 2.0rc1, so that built wheels are compatible
-#    # with both numpy 1 and 2
-#    "numpy>=2.0.0rc1",
-#    "versioneer[toml]"
-#  ]
-#build-backend = "mesonpy"
-
-# --------------------------------------------
-# setuptools
-# --------------------------------------------
-# A list of packages that are needed to build your package:
-#requires = ["setuptools >= 77.0.3"] # REQUIRED if [build-system] table is used
-# The name of the Python object that frontends will use to perform the build:
-#build-backend = "setuptools.build_meta" # If not defined, then legacy behavior can happen.
-
-# --------------------------------------------
-# uv-build
-# --------------------------------------------
-# A list of packages that are needed to build your package:
-requires = ["uv_build>=0.10.2,<0.11.0"]
-# The name of the Python object that frontends will use to perform the build:
-build-backend = "uv_build"
-
-[tool.uv.build-backend]
-module-name = "lyrpy"
-module-root = ""
-source-include = ["tests/*"]
-source-exclude = ["exclude*"]
-
+[tool.setuptools.exclude-package-data]
+#lyrpy = [ "tests/*", ]

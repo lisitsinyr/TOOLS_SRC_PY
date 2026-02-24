@@ -16,7 +16,7 @@ name = "lyrpy"
 # https://packaging.python.org/en/latest/specifications/version-specifiers/#
 # Default value: "[N!]N(.N)*[{a|b|rc}N][.postN][.devN]"
 # Type: str
-version = "2025.12.13"
+version = "2025.12.12"
 # Example usage:
 # version = "0.1.0"
 
@@ -314,13 +314,13 @@ dependencies = [
 # --------------------------------------------
 # PDM
 # --------------------------------------------
-#requires = ["pdm-backend >= 2.4.0"]
-#build-backend = "pdm.backend"
+requires = ["pdm-backend >= 2.4.0"]
+build-backend = "pdm.backend"
 
 # --------------------------------------------
 # mesonpy
 # --------------------------------------------
-#requires = [
+# requires = [
 #    "meson-python>=0.13.1",
 #    "meson>=1.2.1,<2",
 #    "wheel",
@@ -330,7 +330,7 @@ dependencies = [
 #    "numpy>=2.0.0rc1",
 #    "versioneer[toml]"
 #  ]
-#build-backend = "mesonpy"
+# build-backend = "mesonpy"
 
 # --------------------------------------------
 # setuptools
@@ -344,13 +344,6 @@ dependencies = [
 # uv-build
 # --------------------------------------------
 # A list of packages that are needed to build your package:
-requires = ["uv_build>=0.10.2,<0.11.0"]
+# requires = ["uv_build >= 0.9.21, <0.10.0"]
 # The name of the Python object that frontends will use to perform the build:
-build-backend = "uv_build"
-
-[tool.uv.build-backend]
-module-name = "lyrpy"
-module-root = ""
-source-include = ["tests/*"]
-source-exclude = ["exclude*"]
-
+# build-backend = "uv_build"
