@@ -1,7 +1,8 @@
 import os
 
 # print("import lyrpy")
-print(os.path.abspath(__file__))
+# print(os.path.abspath(__file__))
+# print("Hello, **lyrpy**")
 
 #-------------------------------------------------------------------------------
 #
