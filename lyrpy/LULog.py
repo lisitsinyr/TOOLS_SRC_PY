@@ -70,6 +70,8 @@ ctlsEND = '<'
 ctlsPROCESS = 'P'
 ctlsDEBUGTEXT = 'T'
 ctlsTEXT = ''
+ctlsTEXTOK = 'O'
+ctlsTEXTERROR = '_'
 
 TruncLog = 1
 LogPath = ''
@@ -83,6 +85,8 @@ BEGIN = 21
 END = 22
 PROCESS = 23
 TEXT = 24
+TEXTOK = 25
+TEXTERROR = 26
 
 # строка формата сообщения
 # Cstrfmt_04 = '%(asctime)s %(msecs)03d [%(name)s] %(levelno)02d %(levelname)-8s %(module)s %(message)s'
@@ -99,11 +103,13 @@ Cdefaults = {"ip": '_ip_'}
 
 def AddLevelName():
 #beginfunction
-    logging.addLevelName(DEBUGTEXT, 'DEBUGTEXT')
-    logging.addLevelName(BEGIN, 'BEGIN')
-    logging.addLevelName(END, 'END')
-    logging.addLevelName(PROCESS, 'PROCESS')
-    logging.addLevelName(TEXT, 'TEXT')
+    logging.addLevelName (DEBUGTEXT, 'DEBUGTEXT')
+    logging.addLevelName (BEGIN, 'BEGIN')
+    logging.addLevelName (END, 'END')
+    logging.addLevelName (PROCESS, 'PROCESS')
+    logging.addLevelName (TEXT, 'TEXT')
+    logging.addLevelName (TEXTOK, 'TEXTOK')
+    logging.addLevelName (TEXTERROR, 'TEXTERROR')
 #endfunction
 
 CDefaultFileLogINI = 'logging.ini'
@@ -148,6 +154,8 @@ class TTypeLogString(enum.Enum):
     tlsPROCESS = ctlsPROCESS
     tlsDEBUGTEXT = ctlsDEBUGTEXT
     tlsTEXT = ctlsTEXT
+    tlsTEXTOK = ctlsTEXTOK
+    tlsTEXTERROR = ctlsTEXTERROR
     @classmethod
     def Empty(cls):
         ...
@@ -185,7 +193,7 @@ Cbold_white = Cbold+Cwhite
 Cbold_yellow = Cbold+Cyellow
 Cbold_red = Cbold+Cred
 Cbold_red_blue = Cbold+Cred+' on '+Cblue
-Cbold_green = Cbold+Cred
+Cbold_green = Cbold+Cgreen
 
 COLORS_tls = {
     TTypeLogString.tlsNOTSET: LUConsole.cFG8_BLUE + LUConsole.sEND,
@@ -198,7 +206,12 @@ COLORS_tls = {
     TTypeLogString.tlsEND: LUConsole.cS_BOLD + ';' + LUConsole.cFG8_GREEN + LUConsole.sEND,
     TTypeLogString.tlsPROCESS: LUConsole.cS_BOLD + ';' + LUConsole.cFG8_GREEN + LUConsole.sEND,
     TTypeLogString.tlsDEBUGTEXT: LUConsole.cS_BOLD + ';' + LUConsole.cFG8_BLUE + LUConsole.sEND,
-    TTypeLogString.tlsTEXT: LUConsole.cS_BOLD + ';' + LUConsole.cFG8_YELLOW + LUConsole.sEND
+    TTypeLogString.tlsTEXT: LUConsole.cS_BOLD + ';' +
+                            LUConsole.cFG8_YELLOW + LUConsole.sEND,
+    TTypeLogString.tlsTEXTOK: LUConsole.cS_BOLD + ';' +
+                            LUConsole.cFG8_GREEN + LUConsole.sEND,
+    TTypeLogString.tlsTEXTERROR: LUConsole.cS_BOLD + ';' +
+                            LUConsole.cFG8_RED + LUConsole.sEND
 }
 
 COLORS_tls_rich = {
@@ -212,7 +225,9 @@ COLORS_tls_rich = {
     TTypeLogString.tlsEND: Cbold_green,
     TTypeLogString.tlsPROCESS: Cbold_green,
     TTypeLogString.tlsDEBUGTEXT: Cbold_blue,
-    TTypeLogString.tlsTEXT: Cbold_yellow
+    TTypeLogString.tlsTEXT: Cbold_yellow,
+    TTypeLogString.tlsTEXTOK: Cbold_green,
+    TTypeLogString.tlsTEXTERROR: Cbold_red
 }
 
 COLORS = {
@@ -226,7 +241,12 @@ COLORS = {
     END: LUConsole.cS_BOLD + ';' + LUConsole.cFG8_GREEN + LUConsole.sEND,
     PROCESS: LUConsole.cS_BOLD + ';' + LUConsole.cFG8_GREEN + LUConsole.sEND,
     DEBUGTEXT: LUConsole.cS_BOLD + ';' + LUConsole.cFG8_BLUE + LUConsole.sEND,
-    TEXT: LUConsole.cS_BOLD + ';' + LUConsole.cFG8_YELLOW + LUConsole.sEND
+    TEXT: LUConsole.cS_BOLD + ';' + LUConsole.cFG8_YELLOW +
+          LUConsole.sEND,
+    TEXTOK: LUConsole.cS_BOLD + ';' + LUConsole.cFG8_GREEN +
+          LUConsole.sEND,
+    TEXTERROR: LUConsole.cS_BOLD + ';' + LUConsole.cFG8_RED +
+          LUConsole.sEND
 }
 
 COLORS_rich = {
@@ -240,7 +260,9 @@ COLORS_rich = {
     END: Cbold_green,
     PROCESS: Cbold_green,
     DEBUGTEXT: Cbold_blue,
-    TEXT: Cbold_yellow
+    TEXT: Cbold_yellow,
+    TEXTOK: Cbold_green,
+    TEXTERROR: Cbold_red
 }
 
 #TLogOutputs = set of TLogOutput;
@@ -493,10 +515,12 @@ class TFileMemoLog (object):
         self.__FLogStrings.clear ()
         self.__FLogStrings.append (self.__FLogStringAnsi)
         for s in self.__FLogStrings:
-            if T == TTypeLogString.tlsTEXT:
+
+            if (T == TTypeLogString.tlsTEXT) or (T == TTypeLogString.tlsTEXTOK) or (T == TTypeLogString.tlsTEXTERROR):
                 _s = s
             else:
                 _s = self._LogDateStr (False) + ' ' + str(T.value) + ' ' + s
+
             if not LUSupport.IsTerminal ():
                 LCOLOR = COLORS_tls.get (T)
                 if LCOLOR is not None:
@@ -531,11 +555,12 @@ class TFileMemoLog (object):
         self.__FLogStrings.append (self.__FLogStringAnsi)
 
         for s in self.__FLogStrings:
-            if T == TTypeLogString.tlsTEXT:
+
+            if (T == TTypeLogString.tlsTEXT) or (T == TTypeLogString.tlsTEXTOK) or (T == TTypeLogString.tlsTEXTERROR):
                 _s = s
             else:
                 _s = self._LogDateStr (False) + ' ' + str(T.value) + ' ' + s
-            #endif
+
             try:
                 LEncoding = self.__FLogCODE
 
@@ -927,14 +952,14 @@ class TFormatter(logging.Formatter):
 
         Ldatefmt = self.datefmt
         if self.FUseColor:
-            if record.levelno == TEXT:
+            if (record.levelno == TEXT) or (record.levelno == TEXTOK) or (record.levelno == TEXTERROR):
                 # установить новый fmt
                 Lfmt = self._SetColor ('%(message)s', record.levelno)
             else:
                 Lfmt = self._SetColor (self._fmt, record.levelno)
             #endif
         else:
-            if record.levelno == TEXT:
+            if (record.levelno == TEXT) or (record.levelno == TEXTOK) or (record.levelno == TEXTERROR):
                 # установить новый fmt
                 Lfmt = '%(message)s'
             else:
@@ -1482,11 +1507,13 @@ def LogAdd (ALog: int, ALogFile: str, AOpt: TTypeLogString, AMessage: str):
 
 #beginfunction
     LToday = LUDateTime.Now ()
-    if AOpt == TTypeLogString.tlsTEXT:
+
+    if (AOpt == TTypeLogString.tlsTEXT) or (AOpt == TTypeLogString.tlsTEXTOK) or (AOpt == TTypeLogString.tlsTEXTERROR):
         s = AMessage
     else:
         s = LUDateTime.DateTimeStr(False, LToday, LUDateTime.cFormatDateTimeLog01, True)+' '+\
             AOpt.value+' '+AMessage
+
     match ALog:
         case 1|10:
             _WriteConsole (s, AOpt)
