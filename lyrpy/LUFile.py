@@ -78,6 +78,7 @@ ab+ Откроет для добавления нового содержимог
 
 # cDefaultEncoding = 'cp1251'
 cDefaultEncoding = 'utf-8'
+cEncodingutf_8 = 'utf-8'
 
 #--------------------------------------------------------------------------------
 # DirectoryExists
@@ -1060,14 +1061,15 @@ def WriteStrToFile (AFileName: str, AStr: str, AEncoding: str = ''):
     # Создаст новый файл для чтения записи, если не найдет с указанным именем.
     LEncoding = GetFileEncoding (AFileName)
     if AEncoding == '':
-        LEncoding = LUStrDecode.cCP1251
-        LEncoding = cDefaultEncoding
+        LEncoding:str = LUStrDecode.cCP1251
+        LEncoding:str = cDefaultEncoding
     else:
-        LEncoding = AEncoding
+        LEncoding:str = AEncoding
     #endif
+    # LULog.LoggerAdd (LULog.LoggerTOOLS, logging.DEBUG, LEncoding)
 
     if len(AStr) >= 0:
-        LHandle = open (AFileName, 'a+', encoding = LEncoding)
+        LHandle = open (AFileName, 'a+', encoding=LEncoding)
         LHandle.write (AStr + '\n')
         LHandle.flush ()
         LHandle.close ()
