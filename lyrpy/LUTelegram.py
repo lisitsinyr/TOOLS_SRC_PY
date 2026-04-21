@@ -30,7 +30,7 @@ import telethon.sync
 import telethon.tl.types
 
 from telethon.sync import TelegramClient
-from telethon.tl.types import PeerUser, PeerChat, PeerChannel
+# from telethon.tl.types import PeerUser, PeerChat, PeerChannel
 import re
 
 # from telethon.tl.functions.messages import GetDialogsRequest
@@ -68,11 +68,28 @@ LIB_name = ''
 def get_telethon_client (session_name, api_id, api_hash, phone, password) -> telethon.sync.TelegramClient:
     """get_telethon_client"""
 # beginfunction
-    result = telethon.sync.TelegramClient(session_name, api_id, api_hash, system_version="4.16.30-vxNAME ")
+    from telethon import connection
+    # proxy = (mtproto, 't.7.mazeram.com', 443, 'ee470cb2b8b29aeadfbdf8a2f7bee5ca3b62726f777365722e79616e6465782e636f6d')
+
+    # result = telethon.sync.TelegramClient(session_name, api_id, api_hash, system_version="4.16.30-vxNAME ")
+    result = telethon.sync.TelegramClient(session_name, api_id, api_hash, system_version="4.43.1-vxNAME ")
+
+    # result = telethon.sync.TelegramClient (session_name, api_id, api_hash,
+    #                                        # Use one of the available connection modes.
+    #                                        # Normally, this one works with most proxies.
+    #                                        connection=connection.ConnectionTcpMTProxyRandomizedIntermediate,
+    #
+    #                                        # Then, pass the proxy details as a tuple:
+    #                                        #     (host name, port, proxy secret)
+    #                                        #
+    #                                        # If the proxy has no secret, the secret must be:
+    #                                        #     '00000000000000000000000000000000'
+    #                                        proxy=('t.7.mazeram.com', 443, 'ee470cb2b8b29aeadfbdf8a2f7bee5ca3b62726f777365722e79616e6465782e636f6d')    )
+    # return result
+
     #   Вместо NAME используйте любое сочетание букв на английском КАПСОМ Пример: vxXYI, vxABC, vxMYNAME
     #   # (в папке с кодом нет файлика .session, клиент сам его создаст (в нашем случае 'my_session')
     #   # и будет с ним работать. Поэтому просто вставляем эти параметры в инициализацию и кайфуем:finger_up: )
-
     # Tclient = TelegramClient (Gsession_name, Gapi_id, Gapi_hash,
     #                           #         device_model = "iPhone 13 Pro Max",
     #                           #         app_version = "8.4",
@@ -80,9 +97,17 @@ def get_telethon_client (session_name, api_id, api_hash, phone, password) -> tel
     #                           #         system_lang_code = "en-US")
     #                           system_version='4.16.30-vxABC')
     # Tclient.start (phone=Gphone, password=Gpassword)
+
+    # try:
+    #     result.start (phone=phone, password=password)
+    #     result.run_until_disconnected ()
+    # except Exception as e:
+    #     print (f'Ошибка: {e}')
+
     result.start (phone=phone, password=password)
     result.connect ()
     # print (f'{LIB_name}_user_authorized={result.is_user_authorized()}')
+
     return result
 # endfunction
 
@@ -93,7 +118,7 @@ def get_telethon_client (session_name, api_id, api_hash, phone, password) -> tel
 def get_telethon_me (client:telethon.sync.TelegramClient) -> telethon.tl.types.User:
     """get_telethon_me"""
 # beginfunction
-    result:User = client.get_me ()
+    result:telethon.tl.types.User = client.get_me ()
 
     # print (f'{LIB_name}_username={result.username}')
     # print (f'{LIB_name}_phone={result.phone}')
@@ -358,7 +383,7 @@ def get_channel_name (link, session_name, api_id, api_hash, phone):
             entity = client.get_entity (parsed ['username'])
             # entity = client.get_entity (parsed ['msg_id'])
         elif 'channel_id' in parsed:
-            entity = client.get_entity (PeerChannel (parsed ['channel_id']))
+            entity = client.get_entity (telethon.tl.types.Channel (parsed ['channel_id']))
         else:
             raise ValueError ("Could not resolve entity")
         print (f"Название канала: {entity.title}")

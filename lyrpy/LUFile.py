@@ -1243,6 +1243,46 @@ def sanitize_filename (filename, replacement = '_', platform = None):
 
     return filename [:max_length]
 
+#--------------------------------------------------------------------------------
+# get_filename_windows
+#--------------------------------------------------------------------------------
+def get_filename_windows (filename, replacement = '_', platform = None) -> str:
+    """get_filename_windows"""
+# beginfunction
+    """
+    Очищает строку, оставляя только допустимые символы для имени файла.
+    :param filename: исходное имя файла
+    :param replacement: символ для замены недопустимых символов
+    :param platform: целевая платформа ('windows', 'linux', 'darwin' и т.д.), по умолчанию используется текущая ОС
+    :return: корректное имя файла
+    """
+    if not platform:
+        platform = os.name
+
+    # Обрезаем до разумной длины (обычно максимум 255 байт)
+    max_length = 255
+
+    # Удаление начальных и конечные пробелы
+    filename = filename.strip ()
+
+    # Замена недопустимых символов
+    if platform == 'nt':  # Windows
+        invalid_chars = r'[<>:"/\\|?*\x00-\x1F]'
+    else:  # Linux/macOS
+        invalid_chars = r'[/\x00]'
+
+    filename = re.sub (invalid_chars, replacement, filename)
+
+    # Удаление лишних точек и подряд идущих заменителей
+    filename = re.sub (r'(\.' + re.escape (replacement) + r')+', '.', filename)
+    filename = re.sub (re.escape (replacement) + r'{2,}', replacement, filename)
+
+    # Если имя стало пустым — вернуть дефолт
+    if not filename:
+        filename = f"unnamed_file{replacement}"
+
+    return filename [:max_length]
+
 #-------------------------------------------------------------------------------
 # main
 #-------------------------------------------------------------------------------

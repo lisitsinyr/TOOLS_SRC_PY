@@ -23,11 +23,13 @@ import datetime
 # БИБЛИОТЕКИ сторонние
 #------------------------------------------
 import win32com.client
+from selenium import webdriver
+from selenium.webdriver.common.by import By
 
 #------------------------------------------
 # БИБЛИОТЕКИ LU
 #------------------------------------------
-
+import lyrpy.LUFile as LUFile
 
 #------------------------------------------
 # 1. Подключение к локальному Outlook из Python
@@ -417,6 +419,58 @@ def safe_read_messages (account_name, folder_name, limit=5, retry=3):
     return False
 
     # safe_read_messages("work@company.com", "Входящие", 5)
+
+#---------------------------------------------------------
+# SaveLink
+#---------------------------------------------------------
+def SaveLink (link: str, download_path: str, ):
+    """SaveLink"""
+#beginfunction
+    # _filename: str = r'G:\___РАЗБОР\YOUTUBE\qq.mhtml'
+
+    options = webdriver.ChromeOptions ()
+    # Режим headless
+    options.add_argument("--headless")
+    # Создаем объект браузера (в данном случае Chrome)
+    driver = webdriver.Chrome (options=options)
+
+    # driver.minimize_window()
+    # driver.get (
+    #     'https://www.cyberforum.ru/python-beginners/thread2865388.html?ysclid=mnrbo9ltkt538978444')
+    driver.get (link)
+    #
+    print (driver.name)
+    # Получаем заголовок
+    print (driver.title)
+
+    _title = driver.title
+    filename_windows = LUFile.get_filename_windows (_title)
+    print (filename_windows)
+
+    _filename: str = "".join([download_path, '\\', filename_windows, '.mhtml'])
+    print (_filename)
+
+    # Код выведет в консоли исходный HTML код всего содержимого нашей страницы, полученного с помощью метода get(URL)
+    # print (driver.page_source)
+    # try:
+    #     element = driver.find_element (By.NAME, "name")  # Поиск первого <h1>
+    #     print (element)
+    # except:
+    #     pass
+
+    # element = driver.find_element(By.ID, "name")
+    # print(element.title())
+
+    # Execute Chrome dev tool command to obtain the mhtml file
+    res = driver.execute_cdp_cmd ('Page.captureSnapshot', {})
+
+    # Write the file locally
+    with open (_filename, 'w', newline='') as f:
+        f.write (res ['data'])
+
+    driver.quit ()
+
+#endfunction
 
 #---------------------------------------------------------
 # main
