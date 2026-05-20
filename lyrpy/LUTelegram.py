@@ -68,12 +68,11 @@ LIB_name = ''
 def get_telethon_client (session_name, api_id, api_hash, phone, password) -> telethon.sync.TelegramClient:
     """get_telethon_client"""
 # beginfunction
-    from telethon import connection
+
+    # result = telethon.sync.TelegramClient(session_name, api_id, api_hash, system_version="4.43.1-vxNAME ")
+    result = TelegramClient (session_name, api_id, api_hash)
+
     # proxy = (mtproto, 't.7.mazeram.com', 443, 'ee470cb2b8b29aeadfbdf8a2f7bee5ca3b62726f777365722e79616e6465782e636f6d')
-
-    # result = telethon.sync.TelegramClient(session_name, api_id, api_hash, system_version="4.16.30-vxNAME ")
-    result = telethon.sync.TelegramClient(session_name, api_id, api_hash, system_version="4.43.1-vxNAME ")
-
     # result = telethon.sync.TelegramClient (session_name, api_id, api_hash,
     #                                        # Use one of the available connection modes.
     #                                        # Normally, this one works with most proxies.
@@ -85,7 +84,6 @@ def get_telethon_client (session_name, api_id, api_hash, phone, password) -> tel
     #                                        # If the proxy has no secret, the secret must be:
     #                                        #     '00000000000000000000000000000000'
     #                                        proxy=('t.7.mazeram.com', 443, 'ee470cb2b8b29aeadfbdf8a2f7bee5ca3b62726f777365722e79616e6465782e636f6d')    )
-    # return result
 
     #   Вместо NAME используйте любое сочетание букв на английском КАПСОМ Пример: vxXYI, vxABC, vxMYNAME
     #   # (в папке с кодом нет файлика .session, клиент сам его создаст (в нашем случае 'my_session')
@@ -96,7 +94,6 @@ def get_telethon_client (session_name, api_id, api_hash, phone, password) -> tel
     #                           #         lang_code = "en",
     #                           #         system_lang_code = "en-US")
     #                           system_version='4.16.30-vxABC')
-    # Tclient.start (phone=Gphone, password=Gpassword)
 
     # try:
     #     result.start (phone=phone, password=password)
@@ -105,8 +102,7 @@ def get_telethon_client (session_name, api_id, api_hash, phone, password) -> tel
     #     print (f'Ошибка: {e}')
 
     result.start (phone=phone, password=password)
-    result.connect ()
-    # print (f'{LIB_name}_user_authorized={result.is_user_authorized()}')
+    # result.connect ()
 
     return result
 # endfunction
